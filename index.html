@@ -738,13 +738,19 @@
         document.getElementById('consultation-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // In production, you'd send this data to your backend
-            // For now, just show success message
-            document.getElementById('form-content').classList.add('hidden');
-            document.getElementById('form-success').classList.remove('hidden');
-            
-            // Smooth scroll to show success message
-            document.getElementById('consult').scrollIntoView({ behavior: 'smooth' });
+            // Submit to Netlify
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(new FormData(this)).toString()
+            }).then(() => {
+                // Show success message
+                document.getElementById('form-content').classList.add('hidden');
+                document.getElementById('form-success').classList.remove('hidden');
+                document.getElementById('consult').scrollIntoView({ behavior: 'smooth' });
+            }).catch((error) => {
+                alert('Something went wrong. Please try again.');
+            });
         });
 
         // Smooth scroll for anchor links
