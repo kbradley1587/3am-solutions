@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Medical Aesthetics Sales Intelligence | 3AM Solutions</title>
-  <meta name="description" content="Sales intelligence for the manufacturers and dealers who sell to medical aesthetics practices. Launching soon. Request early access." />
+  <title>Dental Sales Intelligence | 3AM Solutions</title>
+  <meta name="description" content="Sales intelligence for the manufacturers and dealers who sell to dental practices. We identify the practices most likely to buy your equipment months before they raise their hand." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -88,6 +88,7 @@
       filter: drop-shadow(0 0 18px rgba(127,174,255,0.12));
     }
 
+    /* Header navigation links */
     .header-nav {
       display: flex;
       align-items: center;
@@ -109,6 +110,18 @@
     .header-nav a:hover { color: var(--white); }
     .header-nav a.active { color: var(--white); border-bottom: 1px solid var(--glow); padding-bottom: 2px; }
 
+    .nav-back {
+      color: rgba(255,255,255,0.72);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-right: auto;
+      margin-left: 1.5rem;
+      transition: color 0.2s ease;
+    }
+    .nav-back:hover { color: var(--white); }
+
     .nav-cta {
       display: inline-flex;
       align-items: center;
@@ -128,7 +141,7 @@
     }
     .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 0 38px rgba(127,174,255,0.32); }
 
-    /* Hero */
+    /* Hero - dark, dense, narrowly addressed */
     .hero {
       min-height: 92vh;
       display: flex;
@@ -170,41 +183,14 @@
 
     .hero > * { position: relative; z-index: 1; }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.45rem 1rem;
-      border: 1px solid rgba(127,174,255,0.4);
-      background: rgba(127,174,255,0.08);
-      border-radius: 999px;
-      color: var(--ice);
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      font-weight: 700;
-      margin-bottom: 2rem;
-      animation: fadeInDown 0.8s ease-out both;
-    }
-
-    .hero-badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--glow);
-      box-shadow: 0 0 8px var(--glow);
-      animation: pulse 2s infinite;
-    }
-
     .hero-eyebrow {
       font-size: 0.85rem;
       color: var(--glow);
       letter-spacing: 0.32em;
       text-transform: uppercase;
       font-weight: 700;
-      margin-bottom: 1.5rem;
-      animation: fadeInDown 0.8s ease-out 0.1s both;
+      margin-bottom: 1.6rem;
+      animation: fadeInDown 0.8s ease-out both;
     }
 
     .hero-eyebrow::after {
@@ -218,26 +204,26 @@
 
     .hero-headline {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.6rem, 6vw, 5rem);
+      font-size: clamp(2.8rem, 6.5vw, 5.6rem);
       line-height: 0.98;
       letter-spacing: 0.025em;
       color: var(--white);
       text-shadow: 0 0 34px rgba(127,174,255,0.16);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.6rem;
       max-width: 1000px;
-      animation: fadeInUp 0.8s ease-out 0.2s both;
+      animation: fadeInUp 0.8s ease-out 0.12s both;
     }
 
     .hero-headline .accent { color: var(--glow); }
 
     .hero-sub {
-      font-size: clamp(1.05rem, 1.9vw, 1.25rem);
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
       color: rgba(255,255,255,0.78);
       font-weight: 300;
       max-width: 760px;
       margin-bottom: 2.4rem;
       line-height: 1.6;
-      animation: fadeInUp 0.8s ease-out 0.32s both;
+      animation: fadeInUp 0.8s ease-out 0.24s both;
     }
 
     .hero-sub strong { color: var(--white); font-weight: 600; }
@@ -247,7 +233,7 @@
       gap: 1rem;
       flex-wrap: wrap;
       justify-content: center;
-      animation: fadeInUp 0.8s ease-out 0.44s both;
+      animation: fadeInUp 0.8s ease-out 0.36s both;
     }
 
     .hero-cta, .hero-secondary {
@@ -278,16 +264,29 @@
     .hero-cta:hover, .hero-secondary:hover { transform: translateY(-3px); }
     .hero-secondary:hover { background: rgba(255,255,255,0.08); }
 
-    /* Positioning section - light */
-    .position-section {
-      padding: 7rem 1.5rem;
-      background: var(--off-white);
+    /* Audience strip - the "who this page is for" line */
+    .audience-strip {
+      background: var(--midnight);
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 1.6rem 1.5rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      border-top: 1px solid rgba(127,174,255,0.08);
+      border-bottom: 1px solid rgba(127,174,255,0.08);
     }
 
-    .section-content {
-      width: min(840px, calc(100% - 3rem));
+    .audience-strip strong { color: var(--white); font-weight: 600; }
+
+    /* Shared section structure */
+    section { position: relative; }
+
+    .section-content, .wide-content {
+      width: min(1100px, calc(100% - 3rem));
       margin: 0 auto;
     }
+
+    .section-content { max-width: 880px; }
 
     .eyebrow {
       color: var(--steel);
@@ -304,29 +303,194 @@
       line-height: 0.98;
       letter-spacing: 0.035em;
       margin-bottom: 1.4rem;
-      color: var(--navy);
     }
 
     .section-lead {
       font-size: clamp(1.05rem, 1.8vw, 1.2rem);
       line-height: 1.85;
       font-weight: 300;
-      color: #4b5563;
     }
 
-    .position-section p {
-      color: #4b5563;
-      font-size: 1.1rem;
+    /* Problem section - dark */
+    .problem-section {
+      padding: 7rem 1.5rem;
+      background: linear-gradient(180deg, #030611 0%, #0b1a2b 100%);
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .problem-section::before {
+      content: 'TOP OF FUNNEL';
+      position: absolute;
+      right: -2vw;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 9vw;
+      color: rgba(255,255,255,0.025);
+      line-height: 1;
+      letter-spacing: 0.1em;
+    }
+
+    .problem-section .section-title { color: var(--white); }
+
+    .problem-section p {
+      color: rgba(255,255,255,0.72);
+      font-size: 1.12rem;
       line-height: 1.85;
       font-weight: 300;
       margin-bottom: 1.4rem;
     }
 
-    .position-section strong { color: var(--navy); font-weight: 700; }
+    .problem-section strong { color: var(--white); font-weight: 600; }
 
-    /* Methodology preview - dark */
-    .preview-section {
-      padding: 7rem 1.5rem;
+    .problem-section .accent { color: var(--glow); font-weight: 600; }
+
+    /* Thesis - punchy beat list */
+    .thesis-section {
+      padding: 6rem 1.5rem;
+      background: var(--off-white);
+    }
+
+    .thesis-card {
+      background: var(--white);
+      border: 1px solid rgba(11,26,43,0.08);
+      border-radius: 28px;
+      padding: clamp(2rem, 4vw, 3.5rem);
+      box-shadow: 0 20px 60px rgba(11,26,43,0.07);
+    }
+
+    .thesis-beats {
+      list-style: none;
+      margin-top: 1.5rem;
+    }
+
+    .thesis-beats li {
+      padding: 1rem 0 1rem 2.5rem;
+      border-bottom: 1px solid rgba(11,26,43,0.06);
+      font-size: 1.08rem;
+      color: var(--dark-text);
+      line-height: 1.65;
+      position: relative;
+      font-weight: 400;
+    }
+
+    .thesis-beats li:last-child { border-bottom: none; }
+
+    .thesis-beats li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 1.55rem;
+      width: 18px;
+      height: 1px;
+      background: var(--steel);
+    }
+
+    .thesis-beats li strong { color: var(--navy); font-weight: 700; }
+
+    /* Process - the dense core */
+    .process-section {
+      padding: 7.5rem 1.5rem;
+      background: #ffffff;
+      position: relative;
+    }
+
+    .process-section::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 18%;
+      bottom: 18%;
+      width: 2px;
+      background: linear-gradient(180deg, transparent, rgba(74,111,165,0.18), transparent);
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .process-intro {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 4rem;
+    }
+
+    .process-intro p {
+      color: #4b5563;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .process-stages {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .process-stage {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 2rem;
+      padding: 2.5rem;
+      border-radius: 24px;
+      background: linear-gradient(180deg, #ffffff, #f7f9fc);
+      border: 1px solid rgba(11,26,43,0.08);
+      box-shadow: 0 18px 40px rgba(11,26,43,0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .process-stage:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 26px 55px rgba(11,26,43,0.1);
+    }
+
+    .stage-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4.5rem;
+      line-height: 0.9;
+      color: rgba(74,111,165,0.32);
+      letter-spacing: 0.02em;
+    }
+
+    .stage-content h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.85rem;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      margin-bottom: 0.7rem;
+      line-height: 1.05;
+    }
+
+    .stage-content p {
+      color: #4b5563;
+      font-size: 1.02rem;
+      line-height: 1.75;
+      font-weight: 300;
+      margin-bottom: 0.9rem;
+    }
+
+    .stage-content p:last-child { margin-bottom: 0; }
+
+    .stage-content strong { color: var(--navy); font-weight: 700; }
+
+    .stage-meta {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px dashed rgba(74,111,165,0.18);
+      font-size: 0.88rem;
+      color: var(--steel);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* Brief deliverable - dark, app screenshot showcase */
+    .brief-section {
+      padding: 7.5rem 1.5rem;
       background:
         radial-gradient(circle at 22% 20%, rgba(127,174,255,0.16), transparent 30%),
         linear-gradient(135deg, #030611 0%, #0b1a2b 100%);
@@ -334,7 +498,7 @@
       overflow: hidden;
     }
 
-    .preview-section::before {
+    .brief-section::before {
       content: 'M37';
       position: absolute;
       right: -2vw;
@@ -346,91 +510,300 @@
       pointer-events: none;
     }
 
-    .preview-inner {
+    .brief-inner {
       position: relative;
       z-index: 1;
-      width: min(900px, calc(100% - 3rem));
+      width: min(1100px, calc(100% - 3rem));
       margin: 0 auto;
-      text-align: center;
     }
 
-    .preview-section .section-title { color: var(--white); margin-bottom: 1.4rem; }
-    .preview-section .accent {
+    .brief-section .section-title { color: var(--white); }
+    .brief-section .section-title .accent {
       color: var(--glow);
       text-shadow: 0 0 25px rgba(127,174,255,0.22);
     }
 
-    .preview-section p {
+    .brief-lead {
+      max-width: 760px;
       color: rgba(255,255,255,0.72);
       font-size: 1.1rem;
       line-height: 1.85;
       font-weight: 300;
-      margin-bottom: 2.4rem;
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-bottom: 3rem;
     }
 
-    .preview-section .eyebrow { color: var(--glow); }
+    .brief-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
 
-    .preview-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 1.1rem 2.2rem;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #385f98, #7faeff);
+    .brief-item {
+      padding: 1.75rem;
+      border-radius: 20px;
+      border: 1px solid rgba(127,174,255,0.18);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .brief-item h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
       color: var(--white);
-      text-decoration: none;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      box-shadow: 0 0 35px rgba(127,174,255,0.28);
-      transition: transform 0.25s ease, gap 0.25s ease;
+      margin-bottom: 0.6rem;
     }
 
-    .preview-cta:hover {
-      transform: translateY(-3px);
-      gap: 0.95rem;
+    .brief-item .brief-num {
+      display: inline-block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      color: var(--glow);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.4rem;
     }
 
-    /* What we'll cover - light */
-    .scope-section {
-      padding: 7rem 1.5rem;
-      background: #ffffff;
+    .brief-item p {
+      color: rgba(255,255,255,0.62);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      font-weight: 300;
     }
 
-    .scope-grid {
+    /* Screenshot showcase - real product, mobile phones */
+    .screenshot-intro {
+      margin-top: 4rem;
+      max-width: 760px;
+    }
+
+    .screenshot-intro p {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.02rem;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .screenshot-intro p strong { color: var(--white); font-weight: 600; }
+
+    .screenshot-row {
+      margin-top: 3rem;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-top: 2.5rem;
+      gap: 2rem;
+      align-items: start;
     }
 
-    .scope-card {
+    .screenshot-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .screenshot-step {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      color: var(--glow);
+      letter-spacing: 0.18em;
+      text-align: center;
+    }
+
+    .screenshot-frame {
+      width: 100%;
+      max-width: 280px;
+      filter: drop-shadow(0 30px 50px rgba(0,0,0,0.45)) drop-shadow(0 0 25px rgba(127,174,255,0.08));
+      transition: transform 0.4s ease;
+    }
+
+    .screenshot-card:hover .screenshot-frame {
+      transform: translateY(-6px);
+    }
+
+    .screenshot-frame img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .screenshot-caption {
+      max-width: 280px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.65);
+      font-weight: 300;
+      line-height: 1.55;
+    }
+
+    .screenshot-caption strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    /* Categories grid - light */
+    .categories-section {
+      padding: 7rem 1.5rem;
+      background: var(--off-white);
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .category-card {
       padding: 1.6rem 1.4rem;
       border-radius: 18px;
-      background: linear-gradient(180deg, #ffffff, #f7f9fc);
+      background: var(--white);
       border: 1px solid rgba(11,26,43,0.08);
       box-shadow: 0 12px 30px rgba(11,26,43,0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
 
-    .scope-card h4 {
+    .category-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 45px rgba(11,26,43,0.09);
+      border-color: rgba(74,111,165,0.3);
+    }
+
+    .category-card h4 {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.25rem;
       letter-spacing: 0.05em;
       color: var(--navy);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.3rem;
       line-height: 1.05;
     }
 
-    .scope-card p {
+    .category-card p {
       color: #6b7280;
-      font-size: 0.9rem;
-      line-height: 1.5;
+      font-size: 0.88rem;
+      line-height: 1.45;
       font-weight: 300;
     }
 
-    /* Form / Early access */
+    .categories-footnote {
+      margin-top: 2rem;
+      text-align: center;
+      color: #6b7280;
+      font-size: 0.95rem;
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* Engagement models - dark */
+    .engagement-section {
+      padding: 7.5rem 1.5rem;
+      background: linear-gradient(180deg, #0b1a2b 0%, #030611 100%);
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .engagement-section .section-title { color: var(--white); }
+
+    .engagement-section .section-lead {
+      color: rgba(255,255,255,0.72);
+      max-width: 720px;
+    }
+
+    .engagement-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3.5rem;
+    }
+
+    .engagement-card {
+      padding: 2.2rem 1.8rem;
+      border-radius: 22px;
+      border: 1px solid rgba(127,174,255,0.18);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+    }
+
+    .engagement-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(127,174,255,0.4);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .engagement-card.featured {
+      border-color: rgba(127,174,255,0.45);
+      background: rgba(127,174,255,0.07);
+      box-shadow: 0 0 50px rgba(127,174,255,0.12);
+    }
+
+    .featured-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      color: var(--midnight);
+      background: var(--glow);
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+      align-self: flex-start;
+    }
+
+    .engagement-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+      line-height: 1.05;
+    }
+
+    .engagement-card p {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.96rem;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 1.1rem;
+    }
+
+    .engagement-card ul {
+      list-style: none;
+      margin-bottom: 1.4rem;
+    }
+
+    .engagement-card ul li {
+      color: rgba(255,255,255,0.62);
+      font-size: 0.92rem;
+      padding: 0.4rem 0 0.4rem 1.5rem;
+      position: relative;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .engagement-card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.85rem;
+      width: 10px;
+      height: 1px;
+      background: var(--glow);
+    }
+
+    .engagement-tag {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px dashed rgba(127,174,255,0.2);
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      color: var(--ice);
+      font-weight: 600;
+    }
+
+    /* CTA / form section */
     .form-section {
       padding: 7rem 1.5rem;
       background: linear-gradient(180deg, #eef2f7 0%, #ffffff 100%);
@@ -442,6 +815,7 @@
       margin: 0 auto 3rem;
     }
 
+    .form-intro .eyebrow { justify-content: center; }
     .form-intro h2 {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(2.4rem, 5.5vw, 3.8rem);
@@ -450,7 +824,6 @@
       color: var(--navy);
       margin-bottom: 1rem;
     }
-
     .form-intro p {
       color: #4b5563;
       font-size: 1.08rem;
@@ -513,7 +886,7 @@
       transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
-    .form-group textarea { min-height: 90px; resize: vertical; }
+    .form-group textarea { min-height: 110px; resize: vertical; }
 
     .form-group input:focus,
     .form-group select:focus,
@@ -569,16 +942,15 @@
       filter: drop-shadow(0 0 18px rgba(127,174,255,0.12));
     }
 
+    footer p { font-size: 0.9rem; font-weight: 300; }
+    footer a { color: rgba(255,255,255,0.72); text-decoration: none; }
+    footer a:hover { color: var(--white); }
+
     .footer-links {
       margin: 1rem 0;
       font-size: 0.88rem;
     }
-    .footer-links a { margin: 0 0.6rem; color: rgba(255,255,255,0.72); text-decoration: none; }
-    .footer-links a:hover { color: var(--white); }
-
-    footer p { font-size: 0.9rem; font-weight: 300; }
-    footer a { color: rgba(255,255,255,0.72); text-decoration: none; }
-    footer a:hover { color: var(--white); }
+    .footer-links a { margin: 0 0.6rem; }
 
     /* Animations */
     @keyframes fadeInDown {
@@ -589,18 +961,19 @@
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(1.3); }
-    }
 
     /* Responsive */
     @media (max-width: 1000px) {
-      .scope-grid { grid-template-columns: repeat(2, 1fr); }
+      .categories-grid { grid-template-columns: repeat(3, 1fr); }
+      .engagement-grid { grid-template-columns: 1fr; }
+      .brief-grid { grid-template-columns: 1fr; }
+      .screenshot-row { grid-template-columns: 1fr; gap: 3rem; }
+      .screenshot-frame { max-width: 320px; }
     }
 
     @media (max-width: 768px) {
       header { padding: 0.75rem 1rem; }
+      .nav-back { display: none; }
       .header-logo { width: 168px; }
       .header-nav { gap: 0.9rem; margin-right: 0.6rem; }
       .header-nav a { font-size: 0.8rem; }
@@ -610,10 +983,22 @@
       .hero-actions { width: 100%; }
       .hero-cta, .hero-secondary { width: 100%; max-width: 320px; }
 
-      .position-section, .preview-section, .scope-section, .form-section { padding: 5rem 1rem; }
+      .problem-section, .thesis-section, .process-section, .brief-section,
+      .categories-section, .engagement-section, .form-section { padding: 5rem 1rem; }
 
-      .scope-grid { grid-template-columns: 1fr; }
+      .process-stage {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        padding: 2rem 1.5rem;
+      }
+
+      .stage-number { font-size: 3.2rem; }
+
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+
       .form-row { grid-template-columns: 1fr; }
+
+      .process-section::before { display: none; }
     }
 
     @media (max-width: 540px) {
@@ -622,7 +1007,7 @@
 
     @media (max-width: 460px) {
       .header-logo { width: 138px; }
-      .nav-cta { font-size: 0.72rem; padding: 0.55rem 0.75rem; }
+      .nav-cta { font-size: 0.7rem; padding: 0.5rem 0.7rem; }
       .hero-headline { font-size: 2.4rem; }
     }
   </style>
@@ -636,123 +1021,373 @@
         <img src="images/3am-horizontal.jpg" alt="3AM Solutions" class="header-logo" />
       </a>
       <nav class="header-nav">
-        <a href="dental.html">Dental</a>
-        <a href="aesthetics.html" class="active">Medical Aesthetics</a>
+        <a href="dental.html" class="active">Dental</a>
+        <a href="aesthetics.html">Medical Aesthetics</a>
         <a href="custom-intelligence.html">Custom Intelligence</a>
       </nav>
-      <a href="#early-access" class="nav-cta">Early Access</a>
+      <a href="#sample" class="nav-cta">Get Sample Brief</a>
     </header>
 
     <!-- Hero -->
     <section class="hero" id="top">
-      <div class="hero-badge">Launching Soon</div>
-
-      <p class="hero-eyebrow">Medical Aesthetics Sales Intelligence</p>
+      <p class="hero-eyebrow">Dental Sales Intelligence</p>
 
       <h1 class="hero-headline">
-        Sales intelligence for medical aesthetics is <span class="accent">launching soon.</span>
+        Sales intelligence for the companies who <span class="accent">sell to dentists.</span>
       </h1>
 
       <p class="hero-sub">
-        Built for the manufacturers and dealers selling <strong>energy devices, RF microneedling platforms, IPL, body contouring, and capital equipment</strong> into med spas, dermatology, and aesthetic practices. Same proven methodology we built for dental — tuned to the realities of how aesthetic device manufacturers actually sell.
+        We identify the practices most likely to buy your equipment <strong>months before they raise their hand.</strong>
+        Built for manufacturers and dealers selling CBCT, lasers, scanners, aligners, and capital equipment into the dental market.
       </p>
 
       <div class="hero-actions">
-        <a href="#early-access" class="hero-cta">Request Early Access</a>
-        <a href="#preview" class="hero-secondary">Preview the Methodology</a>
+        <a href="#sample" class="hero-cta">Get a Free Sample Brief</a>
+        <a href="#process" class="hero-secondary">See How It Works</a>
       </div>
     </section>
 
-    <!-- Positioning -->
-    <section class="position-section">
+    <!-- Audience strip -->
+    <div class="audience-strip">
+      For <strong>VPs of Sales</strong>, <strong>National Sales Trainers</strong>, <strong>Marketing Directors</strong>, and <strong>Dealer Principals</strong> in dental capital equipment.
+    </div>
+
+    <!-- The Problem -->
+    <section class="problem-section" id="problem">
       <div class="section-content">
-        <p class="eyebrow">Why This, Why Now</p>
-        <h2 class="section-title">The aesthetics market has the same blind spot as dental.</h2>
+        <p class="eyebrow" style="color: var(--glow);">The Problem We Solve</p>
+        <h2 class="section-title">Your reps are arriving too late.</h2>
+
         <p>
-          Reps walk into practices reactively. They chase RFPs, work warm inbounds, and fight for share of voice once the practice is already shopping. By then, three competitors are already in the conversation and the deal is no longer about whether — it's about price.
+          By the time a dental practice fills out a form on your website, downloads a whitepaper, or walks up to your booth at a trade show, <strong>three of your competitors are already in the conversation.</strong> The deal is no longer about whether — it's about price. Your margins compress. Your win rate slips. Your reps spend their best hours fighting for share of voice in a room that's already crowded.
         </p>
+
         <p>
-          <strong>Medical aesthetics is even harder than dental.</strong> Sales cycles for energy devices and capital equipment run 90 to 180 days or longer. Average deal sizes are $40K to $150K. The buying signals are dispersed across practice websites, hire announcements, service expansions, and competitive positioning — all of it visible if you know how to look.
+          Generic data brokers don't fix this. They sell <strong>names</strong>, not angles. A list of every dental practice in a zip code is just a phone book. Your reps don't need more numbers to dial — they need to know which numbers are worth dialing, why, and what to lead with on the first call.
         </p>
+
         <p>
-          We're building a platform that does for medical aesthetics what we've already built for dental: identify the practices showing structural buying signals, score them against category-specific rubrics, and put the right ones in front of your reps before the buying conversation starts anywhere else.
-        </p>
-        <p>
-          <strong>The platform launches soon.</strong> The methodology is proven. The application is being built now.
+          <span class="accent">The funnel needs to move left.</span> The work isn't to capture demand once it surfaces. The work is to identify the practices showing the structural signals of a future purchase — and put them in front of your reps before the buying conversation starts anywhere else.
         </p>
       </div>
     </section>
 
-    <!-- Preview the methodology - links to dental -->
-    <section class="preview-section" id="preview">
-      <div class="preview-inner">
-        <p class="eyebrow">Preview the Methodology</p>
-        <h2 class="section-title">See how the platform works in <span class="accent">dental.</span></h2>
-        <p>
-          The dental sales intelligence platform is live and in use today. Same scoring methodology. Same rep experience. Same delivery model. Read the dental page to see the four-stage process, the live application screenshots, the engagement structure, and what a Field Intelligence Brief actually contains. Everything translates directly to medical aesthetics — only the rubrics and equipment categories change.
-        </p>
-        <a href="dental.html" class="preview-cta">
-          See the Dental Platform
-          <span>→</span>
-        </a>
+    <!-- Thesis -->
+    <section class="thesis-section" id="thesis">
+      <div class="section-content">
+        <div class="thesis-card">
+          <p class="eyebrow">Our Thesis</p>
+          <h2 class="section-title">A practice never wakes up one morning and decides to buy a CBCT.</h2>
+
+          <p style="color:#4b5563; font-size:1.08rem; line-height:1.8; font-weight:300;">
+            The signals build for six to eighteen months before the first form fill. They're visible — if you know where to look and how to score them.
+          </p>
+
+          <ul class="thesis-beats">
+            <li><strong>A new oral surgeon joins the team.</strong> Suddenly the implant volume justifies a 3D imaging investment.</li>
+            <li><strong>A website refresh adds "implants," "airway," or "TMJ."</strong> The service menu is expanding in directions that need new equipment.</li>
+            <li><strong>A second location is announced.</strong> Capital is moving. Equipment decisions are being revisited from scratch.</li>
+            <li><strong>A competing manufacturer's installation is aging out.</strong> The seven-year mark is when replacement conversations start.</li>
+            <li><strong>Anxiety, comfort, and sedation language enters the marketing.</strong> The practice is repositioning toward higher-value, technology-enabled procedures.</li>
+            <li><strong>Referrals are leaking out for procedures the practice could perform with the right tool.</strong> That's revenue walking out the door — and a buying motive forming.</li>
+          </ul>
+
+          <p style="color:#4b5563; font-size:1.08rem; line-height:1.8; font-weight:300; margin-top:1.5rem;">
+            We see those signals as they happen — across thousands of practices, scored and ranked — and put the right ones in front of your reps before anyone else is looking.
+          </p>
+        </div>
       </div>
     </section>
 
-    <!-- Scope - what aesthetics will cover -->
-    <section class="scope-section">
-      <div class="section-content" style="max-width: 1000px;">
-        <p class="eyebrow" style="text-align:center;">Scope at Launch</p>
-        <h2 class="section-title" style="text-align:center;">What the platform will cover.</h2>
-        <p class="section-lead" style="text-align:center;">
-          We're building scoring rubrics across the medical aesthetics capital equipment landscape. Each category gets a category-specific model.
-        </p>
+    <!-- The Process -->
+    <section class="process-section" id="process">
+      <div class="wide-content">
+        <div class="process-intro">
+          <p class="eyebrow">The Process</p>
+          <h2 class="section-title">How a Field Intelligence Brief gets built.</h2>
+          <p>Four stages. Each one defensible. Each one repeatable. Each one tuned to your specific equipment category.</p>
+        </div>
 
-        <div class="scope-grid">
-          <div class="scope-card">
-            <h4>Energy Devices</h4>
-            <p>Radiofrequency, ultrasound, laser-based skin tightening and resurfacing platforms.</p>
+        <div class="process-stages">
+          <!-- Stage 1 -->
+          <div class="process-stage">
+            <div class="stage-number">01</div>
+            <div class="stage-content">
+              <h3>Market Mapping</h3>
+              <p>
+                We build a structured database of every dental practice in your target geography from <strong>primary source data</strong> — Google Maps, state dental boards, practice websites, public business records, and live web behavior. Not purchased lists. Not recycled broker data. Built ground-up per engagement.
+              </p>
+              <p>
+                Each practice record includes location, doctor count and credentials, tenure, specialty mix, observable practice size signals, and a structured inventory of every clinical service mentioned on the website.
+              </p>
+              <div class="stage-meta">Typical coverage — 200 to 1,500 practices per market</div>
+            </div>
           </div>
-          <div class="scope-card">
-            <h4>RF Microneedling</h4>
-            <p>Morpheus8, Genius, PiXel8, Vivace-class devices and competitive positioning.</p>
+
+          <!-- Stage 2 -->
+          <div class="process-stage">
+            <div class="stage-number">02</div>
+            <div class="stage-content">
+              <h3>Multi-Factor Scoring</h3>
+              <p>
+                Every practice runs through a category-specific rubric. Our <strong>150-point laser model</strong> weights procedures-without-laser, technology investment, anxiety/comfort marketing posture, competitive market position, practice scope, and website modernity. Our <strong>66-point CBCT model</strong> weights specialty mix, implant and oral surgery volume, referral patterns, technology adoption, and modernization signals.
+              </p>
+              <p>
+                Custom rubrics are built for each engagement based on your equipment category, your ideal customer profile, and the specific buying signals that matter for your sales cycle. <strong>Each factor weighted, each score defensible, each model tunable as the field returns feedback.</strong>
+              </p>
+              <div class="stage-meta">Rubrics calibrated quarterly against rep field feedback</div>
+            </div>
           </div>
-          <div class="scope-card">
-            <h4>IPL &amp; Photofacial</h4>
-            <p>Pigmentation, vascular, and hair removal device categories.</p>
+
+          <!-- Stage 3 -->
+          <div class="process-stage">
+            <div class="stage-number">03</div>
+            <div class="stage-content">
+              <h3>Tier Classification &amp; Pitch Angles</h3>
+              <p>
+                Practices fall into three tiers: <strong>🔥 Hot</strong> (call this week — the signals are aligned and the timing is right), <strong>☀️ Warm</strong> (qualified, nurture sequence), and <strong>❄️ Monitor</strong> (track for triggering events).
+              </p>
+              <p>
+                Every Hot and Warm practice ships with a <strong>recommended pitch angle</strong> — what to lead with on the first call based on the specific signals detected. A practice that just hired an oral surgeon gets a different opener than a practice with an aging competitor's unit. Reps get a ranked list with reasoning, not a name dump with a hope and a prayer.
+              </p>
+              <div class="stage-meta">Reps get answers to "why this practice, why now, and what do I say"</div>
+            </div>
           </div>
-          <div class="scope-card">
-            <h4>Body Contouring</h4>
-            <p>CoolSculpting, EmSculpt, truSculpt, body shaping technology categories.</p>
-          </div>
-          <div class="scope-card">
-            <h4>Laser Systems</h4>
-            <p>Ablative, non-ablative, fractional, and aesthetic laser categories.</p>
-          </div>
-          <div class="scope-card">
-            <h4>Custom Categories</h4>
-            <p>If you sell capital equipment into medical aesthetics, we'll build a model for it.</p>
+
+          <!-- Stage 4 -->
+          <div class="process-stage">
+            <div class="stage-number">04</div>
+            <div class="stage-content">
+              <h3>Delivered in the Platform</h3>
+              <p>
+                Intelligence lives in our <strong>proprietary Glide-based application</strong>. Reps log in from any device, see only their assigned territory, view their scored prospects ranked by tier, drill into the full Field Intelligence Brief for any practice, and see the reasoning behind every score.
+              </p>
+              <p>
+                <strong>Access is permission-controlled by territory.</strong> A rep in the Southeast doesn't see Pacific Northwest practices. Leadership sees everything. Admins assign and reassign accounts as territories shift. No CSV exports rotting in a Downloads folder. No leads going stale on someone's desktop.
+              </p>
+              <div class="stage-meta">Always-on access. Refreshed monthly. No software for your team to deploy.</div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Early Access Form -->
-    <section class="form-section" id="early-access">
+    <!-- What's in a brief -->
+    <section class="brief-section" id="brief">
+      <div class="brief-inner">
+        <p class="eyebrow" style="color: var(--glow);">The Deliverable</p>
+        <h2 class="section-title">What lives inside a <span class="accent">Field Intelligence Brief.</span></h2>
+        <p class="brief-lead">
+          Every scored practice ships with a structured brief your reps can read in two minutes and act on the same day. Six layers of intelligence on every prospect.
+        </p>
+
+        <div class="brief-grid">
+          <div class="brief-item">
+            <div class="brief-num">01</div>
+            <h4>Practice Profile</h4>
+            <p>Location, ownership tenure, doctor count and credentials, specialty mix, size signals, patient demographics, and operating posture. Who you're walking into before you walk in.</p>
+          </div>
+
+          <div class="brief-item">
+            <div class="brief-num">02</div>
+            <h4>Equipment Inventory</h4>
+            <p>What technology the practice currently has, what they don't, and what's likely aging out. The competitive imaging, laser, scanner, and CAD/CAM landscape per practice.</p>
+          </div>
+
+          <div class="brief-item">
+            <div class="brief-num">03</div>
+            <h4>Competitive Intelligence</h4>
+            <p>Which competing manufacturer the practice is currently running, when it was likely installed, and where the vulnerability windows sit. Battle cards your reps can use live.</p>
+          </div>
+
+          <div class="brief-item">
+            <div class="brief-num">04</div>
+            <h4>Buying Signals Detected</h4>
+            <p>Recent staff additions, service line expansions, second-location announcements, referral patterns, website modernization signals, and language shifts that indicate a buying motive forming.</p>
+          </div>
+
+          <div class="brief-item">
+            <div class="brief-num">05</div>
+            <h4>Recommended Pitch Angle</h4>
+            <p>Field-tested opening for the first call, tailored to the specific signals on this practice. Not a generic script — a per-practice angle written to the moment.</p>
+          </div>
+
+          <div class="brief-item">
+            <div class="brief-num">06</div>
+            <h4>Score Breakdown</h4>
+            <p>Every point on the rubric, surfaced and defended. So when a rep asks "why is this practice ranked above that one," the answer is visible, transparent, and trustworthy.</p>
+          </div>
+        </div>
+
+        <!-- Real product screenshots -->
+        <div class="screenshot-intro">
+          <p>
+            Reps work the platform on their phones — between visits, in parking lots, before walking into a meeting. <strong>Territory dashboard, practice detail, field feedback loop.</strong> Three views, one continuous workflow.
+          </p>
+        </div>
+
+        <div class="screenshot-row">
+          <div class="screenshot-card">
+            <div class="screenshot-step">01 — Territory View</div>
+            <div class="screenshot-frame">
+              <img src="images/cbct-dashboard.png" alt="Territory dashboard showing open leads, qualified leads, total product value, and funnel-weighted forecast" />
+            </div>
+            <p class="screenshot-caption">
+              Open the app and see the whole territory at a glance. <strong>Open leads, qualified leads, total product value, funnel-weighted forecast.</strong> Reps see their book. Leadership sees the math.
+            </p>
+          </div>
+
+          <div class="screenshot-card">
+            <div class="screenshot-step">02 — Practice Detail</div>
+            <div class="screenshot-frame">
+              <img src="images/cbct-lead-detail.png" alt="Practice detail view showing equipment inventory, product fit, lead score, and lead tier" />
+            </div>
+            <p class="screenshot-caption">
+              Drill into any practice. <strong>Equipment inventory, product match, lead score, tier classification.</strong> Every signal that drove the score is visible — so the rep trusts the rank and walks in with a plan.
+            </p>
+          </div>
+
+          <div class="screenshot-card">
+            <div class="screenshot-step">03 — Field Feedback</div>
+            <div class="screenshot-frame">
+              <img src="images/cbct-procedures.png" alt="Procedures edit view where reps update what they learned in the field about a practice" />
+            </div>
+            <p class="screenshot-caption">
+              After every visit, reps update what they learned. <strong>Procedures, equipment, follow-up notes.</strong> The intelligence sharpens with every field interaction — your scoring model gets smarter the longer you use it.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories we cover -->
+    <section class="categories-section" id="categories">
+      <div class="wide-content">
+        <p class="eyebrow" style="text-align:center;">Categories We Cover</p>
+        <h2 class="section-title" style="text-align:center;">Built for the equipment you sell.</h2>
+        <p class="section-lead" style="text-align:center; max-width:720px; margin:0 auto; color:#4b5563;">
+          We've built scoring rubrics across the dental capital equipment landscape. Each category gets its own model, tuned to the buying signals that actually predict purchase in that segment.
+        </p>
+
+        <div class="categories-grid">
+          <div class="category-card">
+            <h4>CBCT &amp; 3D Imaging</h4>
+            <p>66-point model. Implants, oral surgery, airway, ortho, endo signals.</p>
+          </div>
+          <div class="category-card">
+            <h4>Hard-Tissue Lasers</h4>
+            <p>150-point model. Solea, Fotona LightWalker, Convergent class.</p>
+          </div>
+          <div class="category-card">
+            <h4>Soft-Tissue &amp; Diode Lasers</h4>
+            <p>Upgrade-path scoring for practices ready to move to hard-tissue.</p>
+          </div>
+          <div class="category-card">
+            <h4>Intraoral Scanners</h4>
+            <p>iTero, Trios, Medit, Primescan-class. Workflow modernization signals.</p>
+          </div>
+          <div class="category-card">
+            <h4>CAD/CAM &amp; Mills</h4>
+            <p>Same-day dentistry signals, lab outsourcing patterns, restorative volume.</p>
+          </div>
+          <div class="category-card">
+            <h4>Clear Aligners</h4>
+            <p>Provider tier signals, ortho positioning, GP aligner programs.</p>
+          </div>
+          <div class="category-card">
+            <h4>Practice Transitions</h4>
+            <p>Career-stage signals, succession indicators, sale-readiness scoring.</p>
+          </div>
+          <div class="category-card">
+            <h4>Custom Categories</h4>
+            <p>If you sell capital equipment into dental, we'll build a model for it.</p>
+          </div>
+        </div>
+
+        <p class="categories-footnote">
+          Working in a category not listed? Talk to us. New rubrics take 2–3 weeks to build and validate.
+        </p>
+      </div>
+    </section>
+
+    <!-- Engagement Models -->
+    <section class="engagement-section" id="engagement">
+      <div class="wide-content">
+        <p class="eyebrow" style="color: var(--glow);">Engagement Models</p>
+        <h2 class="section-title">Three ways to work with us.</h2>
+        <p class="section-lead">
+          Built for capital equipment realities. Sales cycles are long, deals are large, and intelligence has to play out across a full buying window before its value is fully visible. We structure engagements with that math in mind.
+        </p>
+
+        <div class="engagement-grid">
+          <!-- Pilot -->
+          <div class="engagement-card featured">
+            <span class="featured-badge">Most Popular</span>
+            <h3>Six-Month Pilot</h3>
+            <p>Prove the model in one to five territories across a full capital equipment sales cycle.</p>
+            <ul>
+              <li>Full platform access for participating reps</li>
+              <li>Monthly intelligence refreshes</li>
+              <li>Monthly 1:1 sessions with each rep</li>
+              <li>Mid-pilot review at month three</li>
+              <li>Formal results review at month six</li>
+              <li>Closed-deal attribution before renewal conversation</li>
+            </ul>
+            <div class="engagement-tag">Founding partner pricing — first three accounts per category</div>
+          </div>
+
+          <!-- Subscription -->
+          <div class="engagement-card">
+            <h3>Multi-Market Subscription</h3>
+            <p>Following pilot success, ongoing intelligence across expanded territories.</p>
+            <ul>
+              <li>Defined territory coverage</li>
+              <li>Monthly refreshes &amp; net-new prospects</li>
+              <li>Quarterly leadership reviews</li>
+              <li>Rubric tuning based on field feedback</li>
+              <li>Rep onboarding for territory expansions</li>
+            </ul>
+            <div class="engagement-tag">Annual contract</div>
+          </div>
+
+          <!-- Platform -->
+          <div class="engagement-card">
+            <h3>National Intelligence Platform</h3>
+            <p>Always-on, full-market coverage with executive-level reporting.</p>
+            <ul>
+              <li>Full national database, refreshed monthly</li>
+              <li>Quarterly executive briefings</li>
+              <li>Competitive battle cards by category</li>
+              <li>Event &amp; symposium targeting (AAOMS, AAO, study clubs)</li>
+              <li>Custom territory deep-dives on request</li>
+              <li>Rep enablement &amp; training support</li>
+            </ul>
+            <div class="engagement-tag">Annual contract — custom scope</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sample Brief CTA -->
+    <section class="form-section" id="sample">
       <div class="form-intro">
-        <p class="eyebrow">Early Access</p>
-        <h2>Be first when the platform launches.</h2>
+        <p class="eyebrow">See It Before You Sign Anything</p>
+        <h2>Send us a territory. We'll send you back a brief.</h2>
         <p>
-          We're working with a small group of founding partners during the launch phase. Founding partners get early access to the platform, founding partner pricing, and direct input into how the rubrics get built for their equipment category.
+          Tell us one geography you're trying to crack and the equipment category you sell. We'll build you a sample Field Intelligence Brief on five real practices in that territory — at no cost, with no call required, and no commitment on either side.
+        </p>
+        <p style="margin-top:1rem; font-style: italic;">
+          See what your reps don't currently see. If it's useful, we'll talk. If it isn't, you keep the brief.
         </p>
       </div>
 
       <div class="form-container">
-        <h3>Request Early Access</h3>
-        <p class="form-subtitle">We'll reach out as the platform approaches launch.</p>
+        <h3>Request Your Sample Brief</h3>
+        <p class="form-subtitle">Five scored practices in your territory. Free. No call required.</p>
 
-        <form id="early-access-form" name="aesthetics-early-access" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-          <input type="hidden" name="form-name" value="aesthetics-early-access" />
-          <input type="hidden" name="page-source" value="aesthetics" />
+        <form id="sample-form" name="dental-sample-brief" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="dental-sample-brief" />
+          <input type="hidden" name="page-source" value="dental" />
           <p style="display:none;">
             <label>Don't fill this out: <input name="bot-field" /></label>
           </p>
@@ -783,24 +1418,31 @@
             <label for="category">Equipment Category</label>
             <select id="category" name="category" required>
               <option value="">Select your category...</option>
-              <option value="energy">Energy Devices (RF, ultrasound, laser-based)</option>
-              <option value="rf-microneedling">RF Microneedling</option>
-              <option value="ipl">IPL / Photofacial</option>
-              <option value="body-contouring">Body Contouring</option>
-              <option value="lasers">Aesthetic Laser Systems</option>
+              <option value="cbct">CBCT / 3D Imaging</option>
+              <option value="hard-laser">Hard-Tissue Lasers</option>
+              <option value="soft-laser">Soft-Tissue / Diode Lasers</option>
+              <option value="scanners">Intraoral Scanners</option>
+              <option value="cadcam">CAD/CAM / Mills</option>
+              <option value="aligners">Clear Aligners</option>
+              <option value="transitions">Practice Transitions</option>
               <option value="other">Other (tell us below)</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label for="notes">Anything you'd like us to know? (optional)</label>
-            <textarea id="notes" name="notes" placeholder="Specific category, current intel approach, what 'good' looks like for you..."></textarea>
+            <label for="territory">Target Territory</label>
+            <input type="text" id="territory" name="territory" placeholder="e.g., Phoenix metro, North Texas, Southeast region" required />
           </div>
 
-          <button type="submit" class="submit-btn">Request Early Access</button>
+          <div class="form-group">
+            <label for="notes">Anything else worth knowing? (optional)</label>
+            <textarea id="notes" name="notes" placeholder="Specific ICP, current intel approach, what 'good' looks like for you..."></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Send Me a Sample Brief</button>
         </form>
 
-        <p class="form-note">We'll be in touch as the platform approaches launch.</p>
+        <p class="form-note">We'll send your sample brief within 5 business days.</p>
       </div>
     </section>
 
