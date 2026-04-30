@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medical Aesthetics Sales Intelligence | 3AM Solutions</title>
+  <meta name="description" content="Sales intelligence for the manufacturers and dealers who sell to medical aesthetics practices. Launching soon. Request early access." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --midnight: #030611;
+      --midnight-2: #07111f;
+      --navy: #0b1a2b;
+      --navy-soft: #1a2744;
+      --steel: #4a6fa5;
+      --glow: #7faeff;
+      --ice: #c9d8f2;
+      --silver: #d7dce5;
+      --white: #ffffff;
+      --off-white: #f5f5f3;
+      --gray: #6b7280;
+      --dark-text: #142033;
+      --border: rgba(127, 174, 255, 0.14);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', 'Inter', sans-serif;
+      background: var(--off-white);
+      color: var(--dark-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    .page-shell { position: relative; overflow: hidden; }
+
+    .page-shell::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(127,174,255,0.08), transparent 24%),
+        radial-gradient(circle at 80% 10%, rgba(74,111,165,0.07), transparent 30%),
+        linear-gradient(180deg, #05070d 0%, #07111f 24%, #f5f5f3 70%);
+    }
+
+    .page-shell::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.045;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.35'/%3E%3C/svg%3E");
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem clamp(1rem, 3vw, 2.5rem);
+      background: rgba(3, 6, 17, 0.86);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(127, 174, 255, 0.13);
+    }
+
+    .logo { display: flex; align-items: center; text-decoration: none; }
+
+    .header-logo {
+      width: clamp(165px, 22vw, 260px);
+      height: auto;
+      filter: drop-shadow(0 0 18px rgba(127,174,255,0.12));
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+      margin-left: auto;
+      margin-right: 1.5rem;
+    }
+
+    .header-nav a {
+      color: rgba(255,255,255,0.72);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .header-nav a:hover { color: var(--white); }
+    .header-nav a.active { color: var(--white); border-bottom: 1px solid var(--glow); padding-bottom: 2px; }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0.75rem 1.35rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #385f98, #7faeff);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      box-shadow: 0 0 28px rgba(127,174,255,0.2);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 0 38px rgba(127,174,255,0.32); }
+
+    /* Hero */
+    .hero {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 9rem 1.5rem 5rem;
+      position: relative;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 50% 25%, rgba(127,174,255,0.22), transparent 26%),
+        radial-gradient(circle at 50% 50%, rgba(9,22,42,0.78), transparent 50%),
+        linear-gradient(180deg, #030611 0%, #06101e 70%, #08111e 100%);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: min(820px, 92vw);
+      height: min(820px, 92vw);
+      border: 1px solid rgba(127,174,255,0.12);
+      border-radius: 50%;
+      top: 22%;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      box-shadow: inset 0 0 90px rgba(127,174,255,0.04);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(3,6,17,0.22) 68%, rgba(3,6,17,0.9) 100%);
+      pointer-events: none;
+    }
+
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1rem;
+      border: 1px solid rgba(127,174,255,0.4);
+      background: rgba(127,174,255,0.08);
+      border-radius: 999px;
+      color: var(--ice);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      animation: fadeInDown 0.8s ease-out both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--glow);
+      box-shadow: 0 0 8px var(--glow);
+      animation: pulse 2s infinite;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      color: var(--glow);
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      animation: fadeInDown 0.8s ease-out 0.1s both;
+    }
+
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 64px;
+      height: 1px;
+      margin: 1rem auto 0;
+      background: linear-gradient(90deg, transparent, rgba(127,174,255,0.85), transparent);
+    }
+
+    .hero-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      line-height: 0.98;
+      letter-spacing: 0.025em;
+      color: var(--white);
+      text-shadow: 0 0 34px rgba(127,174,255,0.16);
+      margin-bottom: 1.5rem;
+      max-width: 1000px;
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    .hero-headline .accent { color: var(--glow); }
+
+    .hero-sub {
+      font-size: clamp(1.05rem, 1.9vw, 1.25rem);
+      color: rgba(255,255,255,0.78);
+      font-weight: 300;
+      max-width: 760px;
+      margin-bottom: 2.4rem;
+      line-height: 1.6;
+      animation: fadeInUp 0.8s ease-out 0.32s both;
+    }
+
+    .hero-sub strong { color: var(--white); font-weight: 600; }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeInUp 0.8s ease-out 0.44s both;
+    }
+
+    .hero-cta, .hero-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 1rem 2rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .hero-cta {
+      background: linear-gradient(135deg, #385f98, #7faeff);
+      color: var(--white);
+      box-shadow: 0 0 35px rgba(127,174,255,0.28);
+    }
+
+    .hero-secondary {
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero-cta:hover, .hero-secondary:hover { transform: translateY(-3px); }
+    .hero-secondary:hover { background: rgba(255,255,255,0.08); }
+
+    /* Positioning section - light */
+    .position-section {
+      padding: 7rem 1.5rem;
+      background: var(--off-white);
+    }
+
+    .section-content {
+      width: min(840px, calc(100% - 3rem));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      color: var(--steel);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      line-height: 0.98;
+      letter-spacing: 0.035em;
+      margin-bottom: 1.4rem;
+      color: var(--navy);
+    }
+
+    .section-lead {
+      font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+      line-height: 1.85;
+      font-weight: 300;
+      color: #4b5563;
+    }
+
+    .position-section p {
+      color: #4b5563;
+      font-size: 1.1rem;
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 1.4rem;
+    }
+
+    .position-section strong { color: var(--navy); font-weight: 700; }
+
+    /* Methodology preview - dark */
+    .preview-section {
+      padding: 7rem 1.5rem;
+      background:
+        radial-gradient(circle at 22% 20%, rgba(127,174,255,0.16), transparent 30%),
+        linear-gradient(135deg, #030611 0%, #0b1a2b 100%);
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .preview-section::before {
+      content: 'M37';
+      position: absolute;
+      right: -2vw;
+      bottom: 6%;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22vw;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .preview-inner {
+      position: relative;
+      z-index: 1;
+      width: min(900px, calc(100% - 3rem));
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .preview-section .section-title { color: var(--white); margin-bottom: 1.4rem; }
+    .preview-section .accent {
+      color: var(--glow);
+      text-shadow: 0 0 25px rgba(127,174,255,0.22);
+    }
+
+    .preview-section p {
+      color: rgba(255,255,255,0.72);
+      font-size: 1.1rem;
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 2.4rem;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .preview-section .eyebrow { color: var(--glow); }
+
+    .preview-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 1.1rem 2.2rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #385f98, #7faeff);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      box-shadow: 0 0 35px rgba(127,174,255,0.28);
+      transition: transform 0.25s ease, gap 0.25s ease;
+    }
+
+    .preview-cta:hover {
+      transform: translateY(-3px);
+      gap: 0.95rem;
+    }
+
+    /* What we'll cover - light */
+    .scope-section {
+      padding: 7rem 1.5rem;
+      background: #ffffff;
+    }
+
+    .scope-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .scope-card {
+      padding: 1.6rem 1.4rem;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #ffffff, #f7f9fc);
+      border: 1px solid rgba(11,26,43,0.08);
+      box-shadow: 0 12px 30px rgba(11,26,43,0.05);
+    }
+
+    .scope-card h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+      line-height: 1.05;
+    }
+
+    .scope-card p {
+      color: #6b7280;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      font-weight: 300;
+    }
+
+    /* Form / Early access */
+    .form-section {
+      padding: 7rem 1.5rem;
+      background: linear-gradient(180deg, #eef2f7 0%, #ffffff 100%);
+    }
+
+    .form-intro {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 3rem;
+    }
+
+    .form-intro h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+
+    .form-intro p {
+      color: #4b5563;
+      font-size: 1.08rem;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .form-container {
+      width: min(680px, 100%);
+      margin: 0 auto;
+      padding: clamp(2rem, 5vw, 3.5rem);
+      background: #ffffff;
+      border-radius: 30px;
+      border: 1px solid rgba(11,26,43,0.08);
+      box-shadow: 0 26px 70px rgba(11,26,43,0.12);
+    }
+
+    .form-container h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.85rem;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-subtitle {
+      color: #667085;
+      margin-bottom: 1.8rem;
+      font-weight: 300;
+      font-size: 1rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group { margin-bottom: 1.15rem; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.95rem;
+      border-radius: 12px;
+      border: 1px solid rgba(11,26,43,0.16);
+      background: #fbfcfe;
+      color: var(--dark-text);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.98rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .form-group textarea { min-height: 90px; resize: vertical; }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: rgba(74,111,165,0.75);
+      box-shadow: 0 0 0 4px rgba(127,174,255,0.14);
+      background: #ffffff;
+    }
+
+    .submit-btn {
+      width: 100%;
+      min-height: 54px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #14294a, #4a6fa5 55%, #7faeff);
+      color: var(--white);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      box-shadow: 0 18px 40px rgba(74,111,165,0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      margin-top: 0.5rem;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 50px rgba(74,111,165,0.3);
+    }
+
+    .form-note {
+      text-align: center;
+      margin-top: 1.2rem;
+      color: #667085;
+      font-size: 0.88rem;
+    }
+
+    /* Footer */
+    footer {
+      padding: 3.5rem 1.5rem;
+      background: #030611;
+      color: rgba(255,255,255,0.62);
+      text-align: center;
+      border-top: 1px solid rgba(127,174,255,0.12);
+    }
+
+    .footer-logo-img {
+      width: min(260px, 70vw);
+      margin: 0 auto 1.25rem;
+      opacity: 0.92;
+      filter: drop-shadow(0 0 18px rgba(127,174,255,0.12));
+    }
+
+    .footer-links {
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+    .footer-links a { margin: 0 0.6rem; color: rgba(255,255,255,0.72); text-decoration: none; }
+    .footer-links a:hover { color: var(--white); }
+
+    footer p { font-size: 0.9rem; font-weight: 300; }
+    footer a { color: rgba(255,255,255,0.72); text-decoration: none; }
+    footer a:hover { color: var(--white); }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.3); }
+    }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .scope-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 0.75rem 1rem; }
+      .header-logo { width: 168px; }
+      .header-nav { gap: 0.9rem; margin-right: 0.6rem; }
+      .header-nav a { font-size: 0.8rem; }
+      .nav-cta { min-height: 38px; padding: 0.55rem 0.85rem; font-size: 0.78rem; }
+
+      .hero { padding: 8rem 1.1rem 4.5rem; }
+      .hero-actions { width: 100%; }
+      .hero-cta, .hero-secondary { width: 100%; max-width: 320px; }
+
+      .position-section, .preview-section, .scope-section, .form-section { padding: 5rem 1rem; }
+
+      .scope-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 540px) {
+      .header-nav { display: none; }
+    }
+
+    @media (max-width: 460px) {
+      .header-logo { width: 138px; }
+      .nav-cta { font-size: 0.72rem; padding: 0.55rem 0.75rem; }
+      .hero-headline { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-shell">
+    <!-- Header -->
+    <header>
+      <a href="/" class="logo" aria-label="3AM Solutions Home">
+        <img src="images/3am-horizontal.jpg" alt="3AM Solutions" class="header-logo" />
+      </a>
+      <nav class="header-nav">
+        <a href="dental.html">Dental</a>
+        <a href="aesthetics.html" class="active">Medical Aesthetics</a>
+      </nav>
+      <a href="#early-access" class="nav-cta">Early Access</a>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="hero-badge">Launching Soon</div>
+
+      <p class="hero-eyebrow">Medical Aesthetics Sales Intelligence</p>
+
+      <h1 class="hero-headline">
+        Sales intelligence for medical aesthetics is <span class="accent">launching soon.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Built for the manufacturers and dealers selling <strong>energy devices, RF microneedling platforms, IPL, body contouring, and capital equipment</strong> into med spas, dermatology, and aesthetic practices. Same proven methodology we built for dental — tuned to the realities of how aesthetic device manufacturers actually sell.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#early-access" class="hero-cta">Request Early Access</a>
+        <a href="#preview" class="hero-secondary">Preview the Methodology</a>
+      </div>
+    </section>
+
+    <!-- Positioning -->
+    <section class="position-section">
+      <div class="section-content">
+        <p class="eyebrow">Why This, Why Now</p>
+        <h2 class="section-title">The aesthetics market has the same blind spot as dental.</h2>
+        <p>
+          Reps walk into practices reactively. They chase RFPs, work warm inbounds, and fight for share of voice once the practice is already shopping. By then, three competitors are already in the conversation and the deal is no longer about whether — it's about price.
+        </p>
+        <p>
+          <strong>Medical aesthetics is even harder than dental.</strong> Sales cycles for energy devices and capital equipment run 90 to 180 days or longer. Average deal sizes are $40K to $150K. The buying signals are dispersed across practice websites, hire announcements, service expansions, and competitive positioning — all of it visible if you know how to look.
+        </p>
+        <p>
+          We're building a platform that does for medical aesthetics what we've already built for dental: identify the practices showing structural buying signals, score them against category-specific rubrics, and put the right ones in front of your reps before the buying conversation starts anywhere else.
+        </p>
+        <p>
+          <strong>The platform launches soon.</strong> The methodology is proven. The application is being built now.
+        </p>
+      </div>
+    </section>
+
+    <!-- Preview the methodology - links to dental -->
+    <section class="preview-section" id="preview">
+      <div class="preview-inner">
+        <p class="eyebrow">Preview the Methodology</p>
+        <h2 class="section-title">See how the platform works in <span class="accent">dental.</span></h2>
+        <p>
+          The dental sales intelligence platform is live and in use today. Same scoring methodology. Same rep experience. Same delivery model. Read the dental page to see the four-stage process, the live application screenshots, the engagement structure, and what a Field Intelligence Brief actually contains. Everything translates directly to medical aesthetics — only the rubrics and equipment categories change.
+        </p>
+        <a href="dental.html" class="preview-cta">
+          See the Dental Platform
+          <span>→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Scope - what aesthetics will cover -->
+    <section class="scope-section">
+      <div class="section-content" style="max-width: 1000px;">
+        <p class="eyebrow" style="text-align:center;">Scope at Launch</p>
+        <h2 class="section-title" style="text-align:center;">What the platform will cover.</h2>
+        <p class="section-lead" style="text-align:center;">
+          We're building scoring rubrics across the medical aesthetics capital equipment landscape. Each category gets a category-specific model.
+        </p>
+
+        <div class="scope-grid">
+          <div class="scope-card">
+            <h4>Energy Devices</h4>
+            <p>Radiofrequency, ultrasound, laser-based skin tightening and resurfacing platforms.</p>
+          </div>
+          <div class="scope-card">
+            <h4>RF Microneedling</h4>
+            <p>Morpheus8, Genius, PiXel8, Vivace-class devices and competitive positioning.</p>
+          </div>
+          <div class="scope-card">
+            <h4>IPL &amp; Photofacial</h4>
+            <p>Pigmentation, vascular, and hair removal device categories.</p>
+          </div>
+          <div class="scope-card">
+            <h4>Body Contouring</h4>
+            <p>CoolSculpting, EmSculpt, truSculpt, body shaping technology categories.</p>
+          </div>
+          <div class="scope-card">
+            <h4>Laser Systems</h4>
+            <p>Ablative, non-ablative, fractional, and aesthetic laser categories.</p>
+          </div>
+          <div class="scope-card">
+            <h4>Custom Categories</h4>
+            <p>If you sell capital equipment into medical aesthetics, we'll build a model for it.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Early Access Form -->
+    <section class="form-section" id="early-access">
+      <div class="form-intro">
+        <p class="eyebrow">Early Access</p>
+        <h2>Be first when the platform launches.</h2>
+        <p>
+          We're working with a small group of founding partners during the launch phase. Founding partners get early access to the platform, founding partner pricing, and direct input into how the rubrics get built for their equipment category.
+        </p>
+      </div>
+
+      <div class="form-container">
+        <h3>Request Early Access</h3>
+        <p class="form-subtitle">We'll reach out as the platform approaches launch.</p>
+
+        <form id="early-access-form" name="aesthetics-early-access" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="aesthetics-early-access" />
+          <input type="hidden" name="page-source" value="aesthetics" />
+          <p style="display:none;">
+            <label>Don't fill this out: <input name="bot-field" /></label>
+          </p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" id="title" name="title" placeholder="VP of Sales, Marketing Director, etc." required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="company">Company</label>
+              <input type="text" id="company" name="company" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Work Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="category">Equipment Category</label>
+            <select id="category" name="category" required>
+              <option value="">Select your category...</option>
+              <option value="energy">Energy Devices (RF, ultrasound, laser-based)</option>
+              <option value="rf-microneedling">RF Microneedling</option>
+              <option value="ipl">IPL / Photofacial</option>
+              <option value="body-contouring">Body Contouring</option>
+              <option value="lasers">Aesthetic Laser Systems</option>
+              <option value="other">Other (tell us below)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Anything you'd like us to know? (optional)</label>
+            <textarea id="notes" name="notes" placeholder="Specific category, current intel approach, what 'good' looks like for you..."></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Request Early Access</button>
+        </form>
+
+        <p class="form-note">We'll be in touch as the platform approaches launch.</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <img src="images/3am-horizontal.jpg" alt="3AM Solutions" class="footer-logo-img" />
+      <div class="footer-links">
+        <a href="/">Home</a> · <a href="dental.html">Dental</a> · <a href="aesthetics.html">Medical Aesthetics</a>
+      </div>
+      <p>© 2026 3AM Solutions. All rights reserved.</p>
+      <p style="margin-top: 0.5rem;"><a href="mailto:kevin@solutionsfor3am.com">kevin@solutionsfor3am.com</a></p>
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
