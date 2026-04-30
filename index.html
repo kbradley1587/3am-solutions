@@ -110,6 +110,29 @@
       filter: drop-shadow(0 0 18px rgba(127,174,255,0.12));
     }
 
+    /* Header navigation links */
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+      margin-left: auto;
+      margin-right: 1.5rem;
+    }
+
+    .header-nav a {
+      color: rgba(255,255,255,0.72);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .header-nav a:hover {
+      color: var(--white);
+    }
+
     .nav-cta {
       display: inline-flex;
       align-items: center;
@@ -531,6 +554,109 @@
       font-style: italic;
       padding-top: 1.4rem;
       border-top: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 3.5rem;
+    }
+
+    /* Industries We Serve - new section within M37 */
+    .industries-divider {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .industries-divider .eyebrow {
+      color: var(--glow);
+    }
+
+    .industries-divider h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.9rem, 4vw, 2.6rem);
+      letter-spacing: 0.04em;
+      color: var(--white);
+      line-height: 1.05;
+    }
+
+    .industries-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .industry-card {
+      display: block;
+      text-decoration: none;
+      padding: 2rem 1.85rem;
+      border-radius: 22px;
+      border: 1px solid rgba(127,174,255,0.22);
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .industry-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(127,174,255,0.5);
+      background: rgba(127,174,255,0.08);
+      box-shadow: 0 0 50px rgba(127,174,255,0.15);
+    }
+
+    .industry-card .industry-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--glow);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.7rem;
+    }
+
+    .industry-card h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 0.7rem;
+      line-height: 1.05;
+    }
+
+    .industry-card p {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      font-weight: 300;
+      margin-bottom: 1.25rem;
+    }
+
+    .industry-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--glow);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      transition: gap 0.3s ease;
+    }
+
+    .industry-card:hover .industry-arrow {
+      gap: 0.7rem;
+    }
+
+    .industry-card.coming-soon {
+      position: relative;
+    }
+
+    .industry-card.coming-soon .badge {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      font-weight: 800;
+      color: var(--midnight);
+      background: var(--ice);
+      padding: 0.3rem 0.6rem;
+      border-radius: 999px;
     }
 
     /* Form */
@@ -676,6 +802,13 @@
       filter: drop-shadow(0 0 18px rgba(127,174,255,0.12));
     }
 
+    .footer-links {
+      margin: 1rem 0;
+      font-size: 0.88rem;
+    }
+    .footer-links a { margin: 0 0.6rem; color: rgba(255,255,255,0.72); text-decoration: none; }
+    .footer-links a:hover { color: var(--white); }
+
     footer p {
       font-size: 0.9rem;
       font-weight: 300;
@@ -722,6 +855,15 @@
 
       .header-logo {
         width: 168px;
+      }
+
+      .header-nav {
+        gap: 0.9rem;
+        margin-right: 0.6rem;
+      }
+
+      .header-nav a {
+        font-size: 0.8rem;
       }
 
       .nav-cta {
@@ -773,7 +915,8 @@
 
       .steps,
       .m37-pillars,
-      .form-row {
+      .form-row,
+      .industries-grid {
         grid-template-columns: 1fr;
       }
 
@@ -781,6 +924,10 @@
       .m37-pillar {
         min-height: auto;
       }
+    }
+
+    @media (max-width: 540px) {
+      .header-nav { display: none; }
     }
 
     @media (max-width: 460px) {
@@ -807,6 +954,10 @@
       <a href="#" class="logo" aria-label="3AM Solutions Home">
         <img src="images/3am-horizontal.jpg" alt="3AM Solutions - We Solve 3AM" class="header-logo" />
       </a>
+      <nav class="header-nav">
+        <a href="dental.html">Dental</a>
+        <a href="aesthetics.html">Medical Aesthetics</a>
+      </nav>
       <a href="#consult" class="nav-cta">Book Free Consult</a>
     </header>
 
@@ -926,6 +1077,29 @@
         <p class="m37-footnote">
           M37 was developed through 20+ years of sales leadership experience and refined through real-world deployments in dental, aesthetic, and medical device markets.
         </p>
+
+        <!-- Industries We Serve - routes industry buyers to dedicated pages -->
+        <div class="industries-divider">
+          <p class="eyebrow">Industries We Serve</p>
+          <h3>Built for the manufacturers and dealers who sell capital equipment.</h3>
+        </div>
+
+        <div class="industries-grid">
+          <a href="dental.html" class="industry-card">
+            <p class="industry-eyebrow">Dental</p>
+            <h4>Dental Sales Intelligence</h4>
+            <p>For manufacturers and dealers selling CBCT, lasers, scanners, aligners, and capital equipment to dental practices. We identify the practices most likely to buy your equipment months before they raise their hand.</p>
+            <span class="industry-arrow">See the dental platform →</span>
+          </a>
+
+          <a href="aesthetics.html" class="industry-card coming-soon">
+            <span class="badge">Launching Soon</span>
+            <p class="industry-eyebrow">Medical Aesthetics</p>
+            <h4>Medical Aesthetics Intelligence</h4>
+            <p>For manufacturers and dealers selling energy devices, RF microneedling, IPL, body contouring, and capital equipment to med spas, dermatology, and aesthetic practices. The platform launches soon.</p>
+            <span class="industry-arrow">Get early access →</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -986,6 +1160,9 @@
     <!-- Footer -->
     <footer>
       <img src="images/3am-horizontal.jpg" alt="3AM Solutions" class="footer-logo-img" />
+      <div class="footer-links">
+        <a href="/">Home</a> · <a href="dental.html">Dental</a> · <a href="aesthetics.html">Medical Aesthetics</a>
+      </div>
       <p>© 2026 3AM Solutions. All rights reserved.</p>
       <p style="margin-top: 0.5rem;"><a href="mailto:kevin@solutionsfor3am.com">kevin@solutionsfor3am.com</a></p>
     </footer>
