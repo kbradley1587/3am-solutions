@@ -126,6 +126,125 @@
       white-space: nowrap;
     }
     .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 0 38px rgba(127,174,255,0.32); }
+    /* Hamburger menu - mobile navigation */
+    .hamburger-btn {
+      display: none;
+      background: transparent;
+      border: 1px solid rgba(127,174,255,0.18);
+      border-radius: 10px;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      margin-left: 0.6rem;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .hamburger-btn:hover {
+      border-color: rgba(127,174,255,0.4);
+      background: rgba(127,174,255,0.06);
+    }
+
+    .hamburger-btn .bar {
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      background: rgba(255,255,255,0.85);
+      margin: 3px 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .hamburger-btn.open .bar:nth-child(1) {
+      transform: translateY(4.5px) rotate(45deg);
+    }
+    .hamburger-btn.open .bar:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger-btn.open .bar:nth-child(3) {
+      transform: translateY(-4.5px) rotate(-45deg);
+    }
+
+    /* Mobile menu panel */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(3, 6, 17, 0.98);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(127, 174, 255, 0.13);
+      padding: 5.5rem 1.5rem 2rem;
+      z-index: 999;
+      transform: translateY(-100%);
+      transition: transform 0.35s ease, opacity 0.25s ease;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    }
+
+    .mobile-menu.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-menu nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .mobile-menu nav a {
+      display: block;
+      padding: 1rem 1.25rem;
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .mobile-menu nav a:hover,
+    .mobile-menu nav a:active {
+      background: rgba(127,174,255,0.08);
+      border-color: rgba(127,174,255,0.18);
+      color: var(--white);
+    }
+
+    .mobile-menu nav a.active {
+      color: var(--glow);
+      background: rgba(127,174,255,0.06);
+      border-color: rgba(127,174,255,0.2);
+    }
+
+    .mobile-menu-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 6, 17, 0.5);
+      backdrop-filter: blur(2px);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-menu-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Hide desktop nav, show hamburger on mobile */
+    @media (max-width: 768px) {
+      .header-nav { display: none; }
+      .hamburger-btn { display: inline-flex; flex-direction: column; }
+    }
+
 
     /* Hero */
     .hero {
@@ -801,10 +920,6 @@
       .stage-number { font-size: 3.2rem; }
     }
 
-    @media (max-width: 540px) {
-      .header-nav { display: none; }
-    }
-
     @media (max-width: 460px) {
       .header-logo { width: 138px; }
       .nav-cta { font-size: 0.72rem; padding: 0.55rem 0.75rem; }
@@ -825,8 +940,25 @@
         <a href="aesthetics.html">Medical Aesthetics</a>
         <a href="custom-intelligence.html" class="active">Custom Intelligence</a>
       </nav>
+      <button class="hamburger-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
       <a href="#engage" class="nav-cta">Start a Conversation</a>
     </header>
+    <!-- Mobile menu overlay -->
+    <div class="mobile-menu-overlay" aria-hidden="true"></div>
+
+    <!-- Mobile menu panel -->
+    <div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+      <nav>
+        <a href="/">Home</a>
+        <a href="dental.html">Dental</a>
+        <a href="aesthetics.html">Medical Aesthetics</a>
+        <a href="custom-intelligence.html" class="active">Custom Intelligence</a>
+      </nav>
+    </div>
 
     <!-- Hero -->
     <section class="hero" id="top">
@@ -1109,6 +1241,49 @@
   </div>
 
   <script>
+    // Hamburger mobile menu
+    (function() {
+      const btn = document.querySelector('.hamburger-btn');
+      const menu = document.querySelector('.mobile-menu');
+      const overlay = document.querySelector('.mobile-menu-overlay');
+
+      if (!btn || !menu) return;
+
+      function closeMenu() {
+        btn.classList.remove('open');
+        menu.classList.remove('open');
+        if (overlay) overlay.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+
+      function toggleMenu() {
+        const isOpen = btn.classList.toggle('open');
+        menu.classList.toggle('open', isOpen);
+        if (overlay) overlay.classList.toggle('open', isOpen);
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      }
+
+      btn.addEventListener('click', toggleMenu);
+      if (overlay) overlay.addEventListener('click', closeMenu);
+
+      // Close when a menu link is clicked
+      menu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && btn.classList.contains('open')) closeMenu();
+      });
+
+      // Close on resize past breakpoint
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && btn.classList.contains('open')) closeMenu();
+      });
+    })();
+
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function(e) {
         const href = this.getAttribute('href');
