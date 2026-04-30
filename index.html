@@ -1,923 +1,1031 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3AM Solutions | Your 3AM Problem. Solved by 9AM.</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --navy: #1a2744;
-            --navy-light: #2a3a5c;
-            --gray-dark: #3a3a3a;
-            --gray-mid: #6b6b6b;
-            --gray-light: #b8b8b8;
-            --off-white: #f5f5f3;
-            --white: #ffffff;
-            --accent: #4a6fa5;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Source Sans 3', sans-serif;
-            background: var(--off-white);
-            color: var(--navy);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Subtle background texture */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(26, 39, 68, 0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(26, 39, 68, 0.03) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* Header */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            background: linear-gradient(to bottom, var(--off-white) 0%, transparent 100%);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            width: 55px;
-            height: 55px;
-            background: var(--navy);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .logo-icon::before {
-            content: '';
-            position: absolute;
-            width: 68px;
-            height: 68px;
-            border: 1px solid var(--gray-light);
-            border-radius: 50%;
-        }
-
-        .logo-icon span {
-            font-family: 'Bebas Neue', sans-serif;
-            color: var(--white);
-            font-size: 1.35rem;
-            letter-spacing: 0.5px;
-        }
-
-        .logo-text {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.7rem;
-            color: var(--navy);
-            letter-spacing: 2px;
-        }
-
-        .nav-cta {
-            background: var(--navy);
-            color: var(--white);
-            padding: 0.75rem 1.5rem;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-cta:hover {
-            background: var(--navy-light);
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 8rem 2rem 4rem;
-            position: relative;
-        }
-
-        /* Crosshair/target decoration */
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            border: 1px solid rgba(26, 39, 68, 0.08);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border: 1px solid rgba(26, 39, 68, 0.05);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-        }
-
-        /* ─── UPDATED: Hero question — larger, bolder, more visible ─── */
-        .hero-question {
-            font-size: 1.25rem;
-            color: var(--navy);
-            letter-spacing: 4px;
-            text-transform: lowercase;
-            margin-bottom: 2rem;
-            font-weight: 400;
-            opacity: 0.7;
-            position: relative;
-            animation: fadeInDown 0.8s ease-out;
-        }
-
-        /* Subtle underline accent */
-        .hero-question::after {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 1px;
-            background: var(--navy);
-            margin: 0.6rem auto 0;
-            opacity: 0.4;
-        }
-
-        .hero-headline {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(3.5rem, 10vw, 7rem);
-            line-height: 0.95;
-            color: var(--navy);
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
-        .hero-headline .time {
-            display: block;
-            font-size: 0.4em;
-            letter-spacing: 8px;
-            color: var(--gray-mid);
-            margin-top: 0.5rem;
-        }
-
-        .tagline {
-            font-size: 1.4rem;
-            color: var(--navy);
-            font-weight: 300;
-            margin-bottom: 3rem;
-            animation: fadeInUp 0.8s ease-out 0.4s both;
-        }
-
-        .tagline strong {
-            font-weight: 600;
-        }
-
-        .hero-cta {
-            display: inline-block;
-            background: var(--navy);
-            color: var(--white);
-            padding: 1.25rem 3rem;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.8s ease-out 0.6s both;
-        }
-
-        .hero-cta:hover {
-            background: var(--navy-light);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(26, 39, 68, 0.2);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--gray-mid);
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-indicator::after {
-            content: '';
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--gray-mid), transparent);
-        }
-
-        /* Problem Section */
-        .problem-section {
-            padding: 6rem 2rem;
-            background: var(--navy);
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .problem-section::before {
-            content: '3:00';
-            position: absolute;
-            right: -5%;
-            top: 50%;
-            transform: translateY(-50%);
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 20vw;
-            color: rgba(255, 255, 255, 0.03);
-            pointer-events: none;
-        }
-
-        .section-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .problem-section h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.5rem;
-            letter-spacing: 3px;
-            margin-bottom: 2rem;
-            color: var(--off-white);
-        }
-
-        .problem-section p {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: var(--gray-light);
-            margin-bottom: 1.5rem;
-            font-weight: 300;
-        }
-
-        .problem-section p strong {
-            color: var(--white);
-            font-weight: 500;
-        }
-
-        /* Who We Serve */
-        .who-section {
-            padding: 6rem 2rem;
-            background: var(--off-white);
-            border-top: 1px solid rgba(26, 39, 68, 0.1);
-        }
-
-        .who-section h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.5rem;
-            letter-spacing: 3px;
-            margin-bottom: 1.5rem;
-            color: var(--navy);
-        }
-
-        .who-section p {
-            font-size: 1.15rem;
-            line-height: 1.8;
-            color: var(--gray-mid);
-            font-weight: 300;
-        }
-
-        /* How It Works */
-        .how-section {
-            padding: 6rem 2rem;
-            background: var(--off-white);
-        }
-
-        .how-section h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.5rem;
-            letter-spacing: 3px;
-            text-align: center;
-            margin-bottom: 4rem;
-            color: var(--navy);
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 3rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .step {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .step-number {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 4rem;
-            color: var(--gray-light);
-            line-height: 1;
-            margin-bottom: 1rem;
-        }
-
-        .step h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--navy);
-        }
-
-        .step p {
-            color: var(--gray-mid);
-            font-size: 0.95rem;
-            font-weight: 300;
-        }
-
-        /* ─── NEW: M37 Technology Section ─── */
-        .m37-section {
-            padding: 7rem 2rem;
-            background: var(--navy);
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Background watermark */
-        .m37-section::before {
-            content: 'M37';
-            position: absolute;
-            right: -2%;
-            top: 50%;
-            transform: translateY(-50%);
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 28vw;
-            color: rgba(255, 255, 255, 0.03);
-            pointer-events: none;
-            line-height: 1;
-        }
-
-        .m37-inner {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .m37-eyebrow {
-            font-size: 0.8rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 1rem;
-            font-weight: 500;
-        }
-
-        .m37-section h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            letter-spacing: 3px;
-            margin-bottom: 1.5rem;
-            color: var(--white);
-            line-height: 1.05;
-        }
-
-        .m37-section h2 span {
-            color: var(--accent);
-        }
-
-        .m37-lead {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: rgba(255,255,255,0.75);
-            font-weight: 300;
-            margin-bottom: 3rem;
-            max-width: 680px;
-        }
-
-        .m37-pillars {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .m37-pillar {
-            border-left: 2px solid var(--accent);
-            padding: 1.25rem 1.5rem;
-            background: rgba(255,255,255,0.03);
-        }
-
-        .m37-pillar h4 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.15rem;
-            letter-spacing: 2px;
-            color: var(--white);
-            margin-bottom: 0.5rem;
-        }
-
-        .m37-pillar p {
-            font-size: 0.92rem;
-            color: rgba(255,255,255,0.6);
-            font-weight: 300;
-            line-height: 1.6;
-        }
-
-        .m37-footnote {
-            font-size: 0.88rem;
-            color: rgba(255,255,255,0.4);
-            font-weight: 300;
-            font-style: italic;
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding-top: 1.5rem;
-        }
-
-        /* Form Section */
-        .form-section {
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, var(--gray-dark) 0%, var(--navy) 100%);
-            position: relative;
-        }
-
-        .form-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            opacity: 0.03;
-            pointer-events: none;
-        }
-
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--white);
-            padding: 3rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .form-container h2 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
-            letter-spacing: 2px;
-            color: var(--navy);
-            margin-bottom: 0.5rem;
-        }
-
-        .form-container .subtitle {
-            color: var(--gray-mid);
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--navy);
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid var(--gray-light);
-            font-family: 'Source Sans 3', sans-serif;
-            font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            background: var(--white);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--navy);
-            box-shadow: 0 0 0 3px rgba(26, 39, 68, 0.1);
-        }
-
-        .form-group textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: var(--gray-light);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .submit-btn {
-            width: 100%;
-            background: var(--navy);
-            color: var(--white);
-            padding: 1.25rem 2rem;
-            border: none;
-            font-family: 'Source Sans 3', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            letter-spacing: 1px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-
-        .submit-btn:hover {
-            background: var(--navy-light);
-            transform: translateY(-2px);
-        }
-
-        .form-note {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.85rem;
-            color: var(--gray-mid);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--navy);
-            color: var(--gray-light);
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.5rem;
-            letter-spacing: 3px;
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-
-        footer p {
-            font-size: 0.85rem;
-            font-weight: 300;
-        }
-
-        footer a {
-            color: var(--gray-light);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: var(--white);
-        }
-
-        /* Animations */
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header {
-                padding: 1rem;
-            }
-
-            .logo-text {
-                display: none;
-            }
-
-            .nav-cta {
-                padding: 0.6rem 1rem;
-                font-size: 0.8rem;
-            }
-
-            .hero {
-                padding: 6rem 1.5rem 4rem;
-            }
-
-            .hero-question {
-                font-size: 1rem;
-                letter-spacing: 2px;
-            }
-
-            .tagline {
-                font-size: 1.1rem;
-            }
-
-            .problem-section,
-            .how-section,
-            .form-section,
-            .m37-section {
-                padding: 4rem 1.5rem;
-            }
-
-            .form-container {
-                padding: 2rem 1.5rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .scroll-indicator {
-                display: none;
-            }
-
-            .m37-pillars {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Form success state */
-        .form-success {
-            text-align: center;
-            padding: 3rem;
-        }
-
-        .form-success h3 {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2rem;
-            color: var(--navy);
-            margin-bottom: 1rem;
-        }
-
-        .form-success p {
-            color: var(--gray-mid);
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3AM Solutions | Your 3AM Problem. Solved by 9AM.</title>
+  <meta name="description" content="3AM Solutions helps leaders, entrepreneurs, creators, and sales teams solve the business problems that keep them awake at night." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --midnight: #030611;
+      --midnight-2: #07111f;
+      --navy: #0b1a2b;
+      --navy-soft: #1a2744;
+      --steel: #4a6fa5;
+      --glow: #7faeff;
+      --ice: #c9d8f2;
+      --silver: #d7dce5;
+      --white: #ffffff;
+      --off-white: #f5f5f3;
+      --gray: #6b7280;
+      --dark-text: #142033;
+      --border: rgba(127, 174, 255, 0.14);
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Source Sans 3', 'Inter', sans-serif;
+      background: var(--off-white);
+      color: var(--dark-text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page-shell {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-shell::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(127,174,255,0.08), transparent 24%),
+        radial-gradient(circle at 80% 10%, rgba(74,111,165,0.07), transparent 30%),
+        linear-gradient(180deg, #05070d 0%, #07111f 24%, #f5f5f3 70%);
+    }
+
+    .page-shell::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.045;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.35'/%3E%3C/svg%3E");
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem clamp(1rem, 3vw, 2.5rem);
+      background: rgba(3, 6, 17, 0.86);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(127, 174, 255, 0.13);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .header-logo {
+      width: clamp(165px, 22vw, 260px);
+      height: auto;
+      filter: drop-shadow(0 0 18px rgba(127,174,255,0.12));
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0.75rem 1.35rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #385f98, #7faeff);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      box-shadow: 0 0 28px rgba(127,174,255,0.2);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 38px rgba(127,174,255,0.32);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8.5rem 1.5rem 5rem;
+      position: relative;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(127,174,255,0.26), transparent 22%),
+        radial-gradient(circle at 50% 47%, rgba(9,22,42,0.78), transparent 46%),
+        linear-gradient(180deg, #030611 0%, #06101e 70%, #08111e 100%);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: min(820px, 92vw);
+      height: min(820px, 92vw);
+      border: 1px solid rgba(127,174,255,0.12);
+      border-radius: 50%;
+      top: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      box-shadow: inset 0 0 90px rgba(127,174,255,0.04);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(3,6,17,0.22) 68%, rgba(3,6,17,0.9) 100%);
+      pointer-events: none;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-logo-wrap {
+      width: min(620px, 92vw);
+      margin: 0 auto 2rem;
+      filter: drop-shadow(0 0 38px rgba(127,174,255,0.24));
+      animation: fadeInDown 0.8s ease-out both;
+    }
+
+    .hero-logo {
+      width: 100%;
+      height: auto;
+      border-radius: 18px;
+    }
+
+    .hero-question {
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.28em;
+      text-transform: lowercase;
+      margin-bottom: 1.2rem;
+      font-weight: 400;
+      animation: fadeInUp 0.8s ease-out 0.12s both;
+    }
+
+    .hero-question::after {
+      content: '';
+      display: block;
+      width: 54px;
+      height: 1px;
+      margin: 0.8rem auto 0;
+      background: linear-gradient(90deg, transparent, rgba(127,174,255,0.85), transparent);
+    }
+
+    .hero-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.8rem, 9vw, 8rem);
+      line-height: 0.9;
+      letter-spacing: 0.03em;
+      color: var(--white);
+      text-shadow: 0 0 34px rgba(127,174,255,0.16);
+      margin-bottom: 1.3rem;
+      animation: fadeInUp 0.8s ease-out 0.24s both;
+    }
+
+    .hero-headline .time {
+      display: block;
+      font-size: 0.39em;
+      letter-spacing: 0.22em;
+      color: var(--ice);
+      margin-top: 0.5rem;
+    }
+
+    .tagline {
+      font-size: clamp(1.08rem, 2.5vw, 1.45rem);
+      color: rgba(255,255,255,0.78);
+      font-weight: 300;
+      margin-bottom: 2.4rem;
+      animation: fadeInUp 0.8s ease-out 0.36s both;
+    }
+
+    .tagline strong {
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeInUp 0.8s ease-out 0.48s both;
+    }
+
+    .hero-cta,
+    .hero-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 1rem 2rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .hero-cta {
+      background: linear-gradient(135deg, #385f98, #7faeff);
+      color: var(--white);
+      box-shadow: 0 0 35px rgba(127,174,255,0.28);
+    }
+
+    .hero-secondary {
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero-cta:hover,
+    .hero-secondary:hover {
+      transform: translateY(-3px);
+    }
+
+    .hero-secondary:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.45);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      animation: bounce 2s infinite;
+    }
+
+    .scroll-indicator::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 38px;
+      margin: 0.5rem auto 0;
+      background: linear-gradient(to bottom, rgba(127,174,255,0.8), transparent);
+    }
+
+    /* Shared */
+    section {
+      position: relative;
+    }
+
+    .section-content,
+    .wide-content {
+      width: min(1100px, calc(100% - 3rem));
+      margin: 0 auto;
+    }
+
+    .section-content {
+      max-width: 840px;
+    }
+
+    .eyebrow {
+      color: var(--steel);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.6rem, 6vw, 4.35rem);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.35rem;
+    }
+
+    .section-lead {
+      font-size: clamp(1.08rem, 2vw, 1.25rem);
+      line-height: 1.85;
+      font-weight: 300;
+    }
+
+    /* Problem */
+    .problem-section {
+      padding: 7rem 1.5rem;
+      background: linear-gradient(180deg, #030611 0%, #0b1a2b 100%);
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .problem-section::before {
+      content: '3:00';
+      position: absolute;
+      right: -4vw;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24vw;
+      color: rgba(255,255,255,0.035);
+      line-height: 1;
+    }
+
+    .problem-section .section-title {
+      color: var(--white);
+    }
+
+    .problem-section p {
+      color: rgba(255,255,255,0.72);
+      font-size: 1.14rem;
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 1.45rem;
+    }
+
+    .problem-section strong {
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    /* Who */
+    .who-section {
+      padding: 7rem 1.5rem;
+      background: var(--off-white);
+    }
+
+    .who-card {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(11,26,43,0.09);
+      border-radius: 28px;
+      padding: clamp(2rem, 5vw, 4rem);
+      box-shadow: 0 20px 60px rgba(11,26,43,0.08);
+    }
+
+    .who-card .section-lead {
+      color: #4b5563;
+    }
+
+    /* How */
+    .how-section {
+      padding: 7rem 1.5rem;
+      background: #ffffff;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    .step {
+      padding: 2.25rem;
+      border-radius: 26px;
+      background: linear-gradient(180deg, #ffffff, #f7f9fc);
+      border: 1px solid rgba(11,26,43,0.08);
+      box-shadow: 0 18px 40px rgba(11,26,43,0.07);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .step:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 26px 55px rgba(11,26,43,0.1);
+    }
+
+    .step-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4.5rem;
+      line-height: 1;
+      color: rgba(74,111,165,0.25);
+      margin-bottom: 1rem;
+    }
+
+    .step h3 {
+      font-size: 1.15rem;
+      color: var(--navy);
+      margin-bottom: 0.7rem;
+      font-weight: 800;
+    }
+
+    .step p {
+      color: #5f6978;
+      font-size: 1rem;
+      font-weight: 300;
+    }
+
+    /* M37 */
+    .m37-section {
+      padding: 7.5rem 1.5rem;
+      background:
+        radial-gradient(circle at 22% 20%, rgba(127,174,255,0.18), transparent 26%),
+        linear-gradient(135deg, #030611 0%, #0b1a2b 100%);
+      color: var(--white);
+      overflow: hidden;
+    }
+
+    .m37-section::before {
+      content: 'M37';
+      position: absolute;
+      right: -2vw;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 30vw;
+      color: rgba(255,255,255,0.035);
+      line-height: 1;
+    }
+
+    .m37-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1050px, calc(100% - 3rem));
+      margin: 0 auto;
+    }
+
+    .m37-section .section-title span {
+      color: var(--glow);
+      text-shadow: 0 0 25px rgba(127,174,255,0.22);
+    }
+
+    .m37-lead {
+      max-width: 760px;
+      color: rgba(255,255,255,0.72);
+      font-size: 1.18rem;
+      line-height: 1.85;
+      font-weight: 300;
+      margin-bottom: 3rem;
+    }
+
+    .m37-pillars {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .m37-pillar {
+      min-height: 230px;
+      padding: 1.5rem;
+      border-radius: 22px;
+      border: 1px solid rgba(127,174,255,0.16);
+      background: rgba(255,255,255,0.045);
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .m37-pillar h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.45rem;
+      letter-spacing: 0.08em;
+      color: var(--white);
+      margin-bottom: 0.7rem;
+    }
+
+    .m37-pillar p {
+      color: rgba(255,255,255,0.62);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .m37-footnote {
+      color: rgba(255,255,255,0.48);
+      font-size: 0.92rem;
+      font-style: italic;
+      padding-top: 1.4rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Form */
+    .form-section {
+      padding: 7rem 1.5rem;
+      background:
+        linear-gradient(180deg, #eef2f7 0%, #ffffff 100%);
+    }
+
+    .form-container {
+      width: min(680px, 100%);
+      margin: 0 auto;
+      padding: clamp(2rem, 5vw, 3.5rem);
+      background: #ffffff;
+      border-radius: 30px;
+      border: 1px solid rgba(11,26,43,0.08);
+      box-shadow: 0 26px 70px rgba(11,26,43,0.12);
+    }
+
+    .form-container h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.4rem, 6vw, 3.2rem);
+      line-height: 1;
+      letter-spacing: 0.05em;
+      color: var(--navy);
+      margin-bottom: 0.65rem;
+    }
+
+    .subtitle {
+      color: #667085;
+      margin-bottom: 2rem;
+      font-weight: 300;
+      font-size: 1.05rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.45rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(11,26,43,0.16);
+      background: #fbfcfe;
+      color: var(--dark-text);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 1rem;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .form-group textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: rgba(74,111,165,0.75);
+      box-shadow: 0 0 0 4px rgba(127,174,255,0.14);
+      background: #ffffff;
+    }
+
+    .submit-btn {
+      width: 100%;
+      min-height: 54px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #14294a, #4a6fa5 55%, #7faeff);
+      color: var(--white);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      box-shadow: 0 18px 40px rgba(74,111,165,0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      margin-top: 0.65rem;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 24px 50px rgba(74,111,165,0.3);
+    }
+
+    .form-note {
+      text-align: center;
+      margin-top: 1.3rem;
+      color: #667085;
+      font-size: 0.9rem;
+    }
+
+    .form-success {
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .form-success h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+    }
+
+    .form-success p {
+      color: #667085;
+      font-size: 1.05rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Footer */
+    footer {
+      padding: 3.5rem 1.5rem;
+      background: #030611;
+      color: rgba(255,255,255,0.62);
+      text-align: center;
+      border-top: 1px solid rgba(127,174,255,0.12);
+    }
+
+    .footer-logo-img {
+      width: min(260px, 70vw);
+      margin: 0 auto 1.25rem;
+      opacity: 0.92;
+      filter: drop-shadow(0 0 18px rgba(127,174,255,0.12));
+    }
+
+    footer p {
+      font-size: 0.9rem;
+      font-weight: 300;
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.72);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--white);
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-8px); }
+      60% { transform: translateX(-50%) translateY(-4px); }
+    }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .steps,
+      .m37-pillars {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 0.75rem 1rem;
+      }
+
+      .header-logo {
+        width: 168px;
+      }
+
+      .nav-cta {
+        min-height: 38px;
+        padding: 0.58rem 0.9rem;
+        font-size: 0.78rem;
+      }
+
+      .hero {
+        padding: 7rem 1.1rem 4.5rem;
+      }
+
+      .hero-logo-wrap {
+        width: min(430px, 96vw);
+        margin-bottom: 1.65rem;
+      }
+
+      .hero-question {
+        letter-spacing: 0.16em;
+      }
+
+      .hero-actions {
+        width: 100%;
+      }
+
+      .hero-cta,
+      .hero-secondary {
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .scroll-indicator {
+        display: none;
+      }
+
+      .section-content,
+      .wide-content,
+      .m37-inner {
+        width: min(100% - 2rem, 1100px);
+      }
+
+      .problem-section,
+      .who-section,
+      .how-section,
+      .m37-section,
+      .form-section {
+        padding: 5rem 1rem;
+      }
+
+      .steps,
+      .m37-pillars,
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .step,
+      .m37-pillar {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .header-logo {
+        width: 138px;
+      }
+
+      .nav-cta {
+        font-size: 0.72rem;
+        padding: 0.55rem 0.75rem;
+      }
+
+      .hero-headline {
+        font-size: 3.25rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="page-shell">
     <!-- Header -->
     <header>
-        <a href="#" class="logo">
-            <div class="logo-icon">
-                <span>3AM</span>
-            </div>
-            <span class="logo-text">SOLUTIONS</span>
-        </a>
-        <a href="#consult" class="nav-cta">Book Free Consult</a>
+      <a href="#" class="logo" aria-label="3AM Solutions Home">
+        <img src="/images/3am-horizontal.png" alt="3AM Solutions - We Solve 3AM" class="header-logo" />
+      </a>
+      <a href="#consult" class="nav-cta">Book Free Consult</a>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <p class="hero-question">what keeps you awake at 3am?</p>
-        <h1 class="hero-headline">
-            YOUR 3AM PROBLEM
-            <span class="time">SOLVED BY 9AM</span>
-        </h1>
-        <p class="tagline">One problem. One hour. <strong>Real answers.</strong></p>
+    <section class="hero" id="top">
+      <div class="hero-logo-wrap">
+        <img src="/images/3am-primary-arc.png" alt="3AM Solutions" class="hero-logo" />
+      </div>
+
+      <p class="hero-question">what keeps you awake at 3am?</p>
+
+      <h1 class="hero-headline">
+        Your 3AM Problem
+        <span class="time">Solved by 9AM</span>
+      </h1>
+
+      <p class="tagline">One problem. One hour. <strong>Real answers.</strong></p>
+
+      <div class="hero-actions">
         <a href="#consult" class="hero-cta">Get Your Free Consultation</a>
-        <div class="scroll-indicator">SCROLL</div>
+        <a href="#how" class="hero-secondary">See How It Works</a>
+      </div>
+
+      <div class="scroll-indicator">SCROLL</div>
     </section>
 
     <!-- Problem Section -->
-    <section class="problem-section">
-        <div class="section-content">
-            <h2>WE KNOW THAT FEELING</h2>
-            <p>
-                It's 3AM. You're staring at the ceiling while everyone else sleeps. Your mind won't stop churning through the same problem — the one standing between where your business is and where it needs to be.
-            </p>
-            <p>
-                <strong>You've tried everything you can think of.</strong> You've read the books, watched the videos, maybe even hired consultants who gave you a binder full of advice that sits collecting dust.
-            </p>
-            <p>
-                What if there was someone who could actually help you solve it? Not with generic frameworks, but with creative, AI-powered solutions tailored to your specific situation.
-            </p>
-        </div>
+    <section class="problem-section" id="problem">
+      <div class="section-content">
+        <p class="eyebrow">The 3AM Moment</p>
+        <h2 class="section-title">We know that feeling.</h2>
+        <p>
+          It's 3AM. You're staring at the ceiling while everyone else sleeps. Your mind keeps circling the same problem, the one standing between where your business is and where it needs to be.
+        </p>
+        <p>
+          <strong>You've tried everything you can think of.</strong> You've read the books, watched the videos, maybe even hired consultants who gave you a binder full of advice that sits collecting dust.
+        </p>
+        <p>
+          What you need is clarity. A practical path. A solution built around the actual problem in front of you, not a generic framework dressed up as strategy.
+        </p>
+      </div>
     </section>
 
     <!-- Who We Serve -->
-    <section class="who-section">
-        <div class="section-content">
-            <h2>WHO WE SERVE</h2>
-            <p>We work with leaders who are ready to solve their biggest challenge — whether that's a VP at a Fortune 500 company, a small business owner wearing every hat, a sales professional hitting a ceiling or facing a PIP, a writer, a creator, or a retiree launching their next venture. If you've got a problem worth solving, we're built to help.</p>
+    <section class="who-section" id="who">
+      <div class="section-content">
+        <div class="who-card">
+          <p class="eyebrow">Who We Serve</p>
+          <h2 class="section-title">Built for people with problems worth solving.</h2>
+          <p class="section-lead">
+            We work with leaders who are ready to solve their biggest challenge, whether that's a VP at a Fortune 500 company, a small business owner wearing every hat, a sales professional hitting a ceiling or facing a PIP, a writer, a creator, or a retiree launching their next venture. If you've got a problem worth solving, we're built to help.
+          </p>
         </div>
+      </div>
     </section>
 
     <!-- How It Works -->
-    <section class="how-section">
-        <h2>HOW IT WORKS</h2>
+    <section class="how-section" id="how">
+      <div class="wide-content center">
+        <p class="eyebrow">The Process</p>
+        <h2 class="section-title">How it works.</h2>
+        <p class="section-lead">Simple, focused, and designed to move you from pressure to clarity.</p>
+
         <div class="steps">
-            <div class="step">
-                <div class="step-number">01</div>
-                <h3>Tell Us Your Problem</h3>
-                <p>What's the one thing that, if solved, would have the biggest impact on your business?</p>
-            </div>
-            <div class="step">
-                <div class="step-number">02</div>
-                <h3>Free 1-Hour Consult</h3>
-                <p>We'll do a business scan together — no obligation, no pitch. Just real conversation about your challenge.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">03</div>
-                <h3>We Build Your Solution</h3>
-                <p>If there's a fit, we'll scope a custom engagement and fee structure. Then we get to work solving your 3AM problem.</p>
-            </div>
+          <div class="step">
+            <div class="step-number">01</div>
+            <h3>Tell Us Your Problem</h3>
+            <p>What's the one thing that, if solved, would have the biggest impact on your business, career, or next move?</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">02</div>
+            <h3>Free 1-Hour Consult</h3>
+            <p>We'll do a business scan together. No obligation. No pressure. Just a real conversation about your challenge.</p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">03</div>
+            <h3>We Build Your Solution</h3>
+            <p>If there's a fit, we'll scope a custom engagement and fee structure. Then we get to work solving your 3AM problem.</p>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- M37 Technology Section -->
     <section class="m37-section" id="m37">
-        <div class="m37-inner">
-            <p class="m37-eyebrow">Proprietary Technology</p>
-            <h2>THE <span>M37</span> INTELLIGENCE ENGINE</h2>
-            <p class="m37-lead">
-                Most consultants bring opinions. We bring data. M37 is our proprietary market intelligence technology — a custom-built system that scrapes, scores, and surfaces the right opportunities at the right time, so every recommendation we make is backed by real signal, not gut instinct.
-            </p>
+      <div class="m37-inner">
+        <p class="eyebrow">Proprietary Technology</p>
+        <h2 class="section-title">The <span>M37</span> Intelligence Engine</h2>
+        <p class="m37-lead">
+          Most consultants bring opinions. We bring signal. M37 is our proprietary market intelligence technology, a custom-built system that scrapes, scores, and surfaces the right opportunities at the right time, so every recommendation we make is backed by real-world data and practical sales judgment.
+        </p>
 
-            <div class="m37-pillars">
-                <div class="m37-pillar">
-                    <h4>Market Mapping</h4>
-                    <p>We build detailed prospect databases from primary source data — practice websites, public records, and behavioral signals — mapped to your specific market geography.</p>
-                </div>
-                <div class="m37-pillar">
-                    <h4>Proprietary Scoring</h4>
-                    <p>Every prospect is run through a custom multi-factor scoring rubric built specifically for your industry. No generic lead lists — only ranked, qualified targets.</p>
-                </div>
-                <div class="m37-pillar">
-                    <h4>Competitive Intelligence</h4>
-                    <p>We identify where your competition is positioned, where they're vulnerable, and where the whitespace is — giving you a decisive edge before the first call.</p>
-                </div>
-                <div class="m37-pillar">
-                    <h4>Actionable Delivery</h4>
-                    <p>Intelligence without action is noise. M37 outputs go directly into sales-ready formats: battle cards, ROI tools, territory reports, and prioritized prospect lists.</p>
-                </div>
-            </div>
+        <div class="m37-pillars">
+          <div class="m37-pillar">
+            <h4>Market Mapping</h4>
+            <p>We build detailed prospect databases from primary source data, public records, market signals, and digital behavior tied to your specific geography.</p>
+          </div>
 
-            <p class="m37-footnote">
-                M37 was developed through 20+ years of sales leadership experience and refined through real-world deployments in the dental, aesthetic, and medical device industries.
-            </p>
+          <div class="m37-pillar">
+            <h4>Proprietary Scoring</h4>
+            <p>Every prospect can be run through a custom multi-factor rubric built for your market. No generic lead lists. Ranked, qualified targets.</p>
+          </div>
+
+          <div class="m37-pillar">
+            <h4>Competitive Intelligence</h4>
+            <p>We identify where your competition is positioned, where they're vulnerable, and where the whitespace is before your first call.</p>
+          </div>
+
+          <div class="m37-pillar">
+            <h4>Actionable Delivery</h4>
+            <p>Intelligence without action is noise. M37 outputs can become sales-ready battle cards, ROI tools, territory reports, and prioritized prospect lists.</p>
+          </div>
         </div>
+
+        <p class="m37-footnote">
+          M37 was developed through 20+ years of sales leadership experience and refined through real-world deployments in dental, aesthetic, and medical device markets.
+        </p>
+      </div>
     </section>
 
     <!-- Form Section -->
     <section class="form-section" id="consult">
-        <div class="form-container">
-            <div id="form-content">
-                <h2>REQUEST YOUR FREE CONSULTATION</h2>
-                <p class="subtitle">No obligation. No sales pitch. Just solutions.</p>
-                
-                <form id="consultation-form" name="consultation" method="POST" data-netlify="true">
-                    <input type="hidden" name="form-name" value="consultation">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" placeholder="John Smith" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="john@company.com" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="business">Business Name & What You Do</label>
-                        <input type="text" id="business" name="business" placeholder="Smith & Co. — Commercial HVAC Services" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="problem">If you could solve ONE problem that would have the biggest impact on your business — what would it be?</label>
-                        <textarea id="problem" name="problem" placeholder="Tell us about the challenge that's keeping you up at night..." required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="duration">How long has this problem been on your mind?</label>
-                        <input type="text" id="duration" name="duration" placeholder="6 months, 2 years, etc.">
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Request My Free Consultation</button>
-                </form>
-                
-                <p class="form-note">We'll reach out within 24 hours to schedule your consultation.</p>
+      <div class="form-container">
+        <div id="form-content">
+          <h2>Request Your Free Consultation</h2>
+          <p class="subtitle">No obligation. No sales pitch. Just solutions.</p>
+
+          <form id="consultation-form" name="consultation" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="consultation" />
+            <p class="hidden">
+              <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+            </p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="John Smith" required />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="john@company.com" required />
+              </div>
             </div>
-            
-            <div id="form-success" class="form-success hidden">
-                <h3>THANK YOU</h3>
-                <p>We've received your request and will be in touch within 24 hours to schedule your free consultation.</p>
-                <p style="margin-top: 1rem;">Get some sleep — help is on the way.</p>
+
+            <div class="form-group">
+              <label for="business">Business Name &amp; What You Do</label>
+              <input type="text" id="business" name="business" placeholder="Smith & Co. — Commercial HVAC Services" required />
             </div>
+
+            <div class="form-group">
+              <label for="problem">If you could solve ONE problem that would have the biggest impact, what would it be?</label>
+              <textarea id="problem" name="problem" placeholder="Tell us about the challenge that's keeping you up at night..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="duration">How long has this problem been on your mind?</label>
+              <input type="text" id="duration" name="duration" placeholder="6 months, 2 years, etc." />
+            </div>
+
+            <button type="submit" class="submit-btn">Request My Free Consultation</button>
+          </form>
+
+          <p class="form-note">We'll reach out within 24 hours to schedule your consultation.</p>
         </div>
+
+        <div id="form-success" class="form-success hidden">
+          <h3>Thank You</h3>
+          <p>We've received your request and will be in touch within 24 hours to schedule your free consultation.</p>
+          <p style="margin-top: 1rem;">Get some sleep. Help is on the way.</p>
+        </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-logo">3AM SOLUTIONS</div>
-        <p>© 2026 3AM Solutions. All rights reserved.</p>
-        <p style="margin-top: 0.5rem;"><a href="mailto:hello@solutionsfor3am.com">hello@solutionsfor3am.com</a></p>
+      <img src="/images/3am-horizontal.png" alt="3AM Solutions" class="footer-logo-img" />
+      <p>© 2026 3AM Solutions. All rights reserved.</p>
+      <p style="margin-top: 0.5rem;"><a href="mailto:hello@solutionsfor3am.com">hello@solutionsfor3am.com</a></p>
     </footer>
+  </div>
 
-    <script>
-        // Form submission handling
-        document.getElementById('consultation-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Submit to Netlify
-            fetch('/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(new FormData(this)).toString()
-            }).then(() => {
-                // Show success message
-                document.getElementById('form-content').classList.add('hidden');
-                document.getElementById('form-success').classList.remove('hidden');
-                document.getElementById('consult').scrollIntoView({ behavior: 'smooth' });
-            }).catch((error) => {
-                alert('Something went wrong. Please try again.');
-            });
-        });
+  <script>
+    const form = document.getElementById('consultation-form');
 
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            });
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form)).toString()
+        })
+        .then(() => {
+          document.getElementById('form-content').classList.add('hidden');
+          document.getElementById('form-success').classList.remove('hidden');
+          document.getElementById('consult').scrollIntoView({ behavior: 'smooth' });
+        })
+        .catch(() => {
+          alert('Something went wrong. Please try again or email hello@solutionsfor3am.com.');
         });
-    </script>
+      });
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (!href || href === '#') return;
+
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
