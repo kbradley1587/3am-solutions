@@ -577,7 +577,7 @@
 
     .industries-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
     }
 
@@ -841,6 +841,12 @@
     }
 
     /* Responsive */
+    @media (max-width: 1100px) {
+      .industries-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     @media (max-width: 1000px) {
       .steps,
       .m37-pillars {
@@ -957,6 +963,7 @@
       <nav class="header-nav">
         <a href="dental.html">Dental</a>
         <a href="aesthetics.html">Medical Aesthetics</a>
+        <a href="custom-intelligence.html">Custom Intelligence</a>
       </nav>
       <a href="#consult" class="nav-cta">Book Free Consult</a>
     </header>
@@ -1099,6 +1106,13 @@
             <p>For manufacturers and dealers selling energy devices, RF microneedling, IPL, body contouring, and capital equipment to med spas, dermatology, and aesthetic practices. The platform launches soon.</p>
             <span class="industry-arrow">Get early access →</span>
           </a>
+
+          <a href="custom-intelligence.html" class="industry-card">
+            <p class="industry-eyebrow">Custom</p>
+            <h4>Custom Intelligence</h4>
+            <p>For capital equipment categories beyond dental and aesthetics. Veterinary, chiropractic, automotive aftermarket, industrial, sports marketing, utilities, and others. Same methodology, your vertical.</p>
+            <span class="industry-arrow">Explore custom builds →</span>
+          </a>
         </div>
       </div>
     </section>
@@ -1161,7 +1175,7 @@
     <footer>
       <img src="images/3am-horizontal.jpg" alt="3AM Solutions" class="footer-logo-img" />
       <div class="footer-links">
-        <a href="/">Home</a> · <a href="dental.html">Dental</a> · <a href="aesthetics.html">Medical Aesthetics</a>
+        <a href="/">Home</a> · <a href="dental.html">Dental</a> · <a href="aesthetics.html">Medical Aesthetics</a> · <a href="custom-intelligence.html">Custom Intelligence</a>
       </div>
       <p>© 2026 3AM Solutions. All rights reserved.</p>
       <p style="margin-top: 0.5rem;"><a href="mailto:kevin@solutionsfor3am.com">kevin@solutionsfor3am.com</a></p>
