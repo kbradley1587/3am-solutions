@@ -463,7 +463,13 @@ function buildQuery() {
     if (!s) continue;
     if (f.special === 'email') { add('emails', s === 1 ? 'neq.{}' : 'eq.{}'); continue; }
     if (f.bool) { add(f.bool, s === 1 ? 'is.true' : 'not.is.true'); continue; }
-    if (f.fts) { add('site_tsv', (s === 1 ? '' : 'not.') + 'fts(english).' + f.fts); continue; }
+    if (f.fts) {
+      // PostgREST will not take a not. prefix on a parameterised operator,
+      // so negation goes through the or=() form instead.
+      if (s === 1) add('site_tsv', 'fts(english).' + f.fts);
+      else parts_or.push('not.or=(site_tsv.fts(english).' + f.fts + ')');
+      continue;
+    }
     if (f.any) {
       // Invisalign cannot be delivered without a digital scan, so an aligner
       // practice is a scanner practice even when the site never says "scanner".
