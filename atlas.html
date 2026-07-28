@@ -148,7 +148,7 @@
 </div>
 
 <div id="chips"></div>
-<div class="hint">Click a signal once to require it, twice to exclude it, three times to clear. I/O SCANNER includes aligner and CEREC practices; SCANNER (STATED) is only where the site names one.</div>
+<div class="hint">Click a signal once to require it, twice to exclude it, three times to clear. I/O SCANNER is every practice that must own a scanner: stated scanners plus aligner, CEREC and CAD/CAM practices. INVISALIGN is the branded subset. ALL ALIGNERS adds ClearCorrect, Spark and SureSmile practices.</div>
 
 <div id="status">Choose filters and hit SEARCH.</div>
 <div class="hint" id="gen"></div>
@@ -392,7 +392,7 @@ const FILTERS = [
                                                   ["technology","cerec_same_day"],
                                                   ["technology","cad_cam"],
                                                   ["procedures","invisalign_aligners"]]},
-  {id:"scanx", label:"SCANNER (STATED)",   col:"technology", key:"intraoral_scanner"},
+  {id:"invis", label:"INVISALIGN",        fts:"invisalign"},
   {id:"cerec", label:"CEREC / SAME-DAY",  col:"technology", key:"cerec_same_day"},
   {id:"laser", label:"ANY LASER",         bool:"has_laser"},
   {id:"print", label:"3D PRINTING",       col:"technology", key:"three_d_printing"},
@@ -405,7 +405,7 @@ const FILTERS = [
   {id:"sleep", label:"SLEEP APNEA",       col:"procedures", key:"sleep_apnea"},
   {id:"sed",   label:"SEDATION",          bool:"has_sedation"},
   {id:"tmj",   label:"TMJ",               col:"procedures", key:"tmj_treatment"},
-  {id:"inv",   label:"ALIGNERS",          col:"procedures", key:"invisalign_aligners"},
+  {id:"inv",   label:"ALL ALIGNERS",      col:"procedures", key:"invisalign_aligners"},
   {id:"botox", label:"BOTOX / FILLERS",   col:"procedures", key:"botox_fillers"},
   {id:"email", label:"HAS EMAIL",         special:"email"}
 ];
@@ -463,6 +463,7 @@ function buildQuery() {
     if (!s) continue;
     if (f.special === 'email') { add('emails', s === 1 ? 'neq.{}' : 'eq.{}'); continue; }
     if (f.bool) { add(f.bool, s === 1 ? 'is.true' : 'not.is.true'); continue; }
+    if (f.fts) { add('site_tsv', (s === 1 ? '' : 'not.') + 'fts(english).' + f.fts); continue; }
     if (f.any) {
       // Invisalign cannot be delivered without a digital scan, so an aligner
       // practice is a scanner practice even when the site never says "scanner".
