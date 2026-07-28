@@ -464,10 +464,9 @@ function buildQuery() {
     if (f.special === 'email') { add('emails', s === 1 ? 'neq.{}' : 'eq.{}'); continue; }
     if (f.bool) { add(f.bool, s === 1 ? 'is.true' : 'not.is.true'); continue; }
     if (f.fts) {
-      // PostgREST will not take a not. prefix on a parameterised operator,
-      // so negation goes through the or=() form instead.
-      if (s === 1) add('site_tsv', 'fts(english).' + f.fts);
-      else parts_or.push('not.or=(site_tsv.fts(english).' + f.fts + ')');
+      // No (english) parameter: the server default config is already english,
+      // and the parentheses break PostgREST's parser.
+      add('site_tsv', (s === 1 ? 'fts.' : 'not.fts.') + f.fts);
       continue;
     }
     if (f.any) {
