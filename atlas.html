@@ -392,8 +392,7 @@ const FILTERS = [
                                                   ["technology","cerec_same_day"],
                                                   ["technology","cad_cam"],
                                                   ["procedures","invisalign_aligners"]]},
-  {id:"invis", label:"INVISALIGN",        fts:"invisalign",
-                                          fallbackCol:"procedures", fallbackKey:"invisalign_aligners"},
+  {id:"invis", label:"INVISALIGN",        embedBool:"has_invisalign"},
   {id:"cerec", label:"CEREC / SAME-DAY",  col:"technology", key:"cerec_same_day"},
   {id:"laser", label:"ANY LASER",         bool:"has_laser"},
   {id:"print", label:"3D PRINTING",       col:"technology", key:"three_d_printing"},
@@ -430,16 +429,17 @@ function buildQuery() {
   const add = (k, v) => parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
 
   const orgs = selectedOrgs();
-  const orgFiltering = orgs.length > 0 && orgs.length < ORGS.length;
+  let orgNeeded = FILTERS.some(f => f.embedBool && state[f.id] !== 0);
+  const orgFiltering = (orgs.length > 0 && orgs.length < ORGS.length) || orgNeeded;
   // !inner only when actually filtering, so a market loaded before the next
   // refresh_practice_org() run is never silently dropped from an unfiltered search
-  const embed = orgFiltering ? 'practice_org!inner(org_type,org_brand)' : 'practice_org(org_type,org_brand)';
+  const embed = orgFiltering ? 'practice_org!inner(org_type,org_brand,has_invisalign)' : 'practice_org(org_type,org_brand,has_invisalign)';
 
   add('select', 'name,metro,city,address,postal_code,phone,website,google_rating,review_count,doctor_names,emails,' + embed);
   add('permanently_closed', 'eq.false');
   add('temporarily_closed', 'eq.false');
   if (document.getElementById('enrichedOnly').checked) add('site_text', 'not.is.null');
-  if (orgFiltering) add('practice_org.org_type', 'in.(' + orgs.join(',') + ')');
+  if (orgs.length > 0 && orgs.length < ORGS.length) add('practice_org.org_type', 'in.(' + orgs.join(',') + ')');
 
   const mk = selectedMarkets();
   if (mk.length === 1) add('metro', 'eq.' + mk[0]);
@@ -464,13 +464,11 @@ function buildQuery() {
     if (!s) continue;
     if (f.special === 'email') { add('emails', s === 1 ? 'neq.{}' : 'eq.{}'); continue; }
     if (f.bool) { add(f.bool, s === 1 ? 'is.true' : 'not.is.true'); continue; }
-    if (f.fts) {
-      // Require: full-text on site_tsv, which the GIN index answers instantly.
-      // Exclude: NOT(tsvector @@ q) cannot use that index and forces a scan of
-      // every 400K tsvector, which times out. Fall back to the small jsonb
-      // signal, which is 8x faster and errs toward excluding more.
-      if (s === 1) add('site_tsv', 'fts.' + f.fts);
-      else add(f.fallbackCol, 'not.cs.' + JSON.stringify({[f.fallbackKey]: true}));
+    if (f.embedBool) {
+      // Brand flag lives on the small practice_org sidecar and is indexed, so
+      // both directions are fast and they sum to the enriched total exactly.
+      orgNeeded = true;
+      add('practice_org.' + f.embedBool, s === 1 ? 'is.true' : 'is.false');
       continue;
     }
     if (f.any) {
