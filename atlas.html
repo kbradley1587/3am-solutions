@@ -392,7 +392,8 @@ const FILTERS = [
                                                   ["technology","cerec_same_day"],
                                                   ["technology","cad_cam"],
                                                   ["procedures","invisalign_aligners"]]},
-  {id:"invis", label:"INVISALIGN",        fts:"invisalign"},
+  {id:"invis", label:"INVISALIGN",        fts:"invisalign",
+                                          fallbackCol:"procedures", fallbackKey:"invisalign_aligners"},
   {id:"cerec", label:"CEREC / SAME-DAY",  col:"technology", key:"cerec_same_day"},
   {id:"laser", label:"ANY LASER",         bool:"has_laser"},
   {id:"print", label:"3D PRINTING",       col:"technology", key:"three_d_printing"},
@@ -464,9 +465,12 @@ function buildQuery() {
     if (f.special === 'email') { add('emails', s === 1 ? 'neq.{}' : 'eq.{}'); continue; }
     if (f.bool) { add(f.bool, s === 1 ? 'is.true' : 'not.is.true'); continue; }
     if (f.fts) {
-      // No (english) parameter: the server default config is already english,
-      // and the parentheses break PostgREST's parser.
-      add('site_tsv', (s === 1 ? 'fts.' : 'not.fts.') + f.fts);
+      // Require: full-text on site_tsv, which the GIN index answers instantly.
+      // Exclude: NOT(tsvector @@ q) cannot use that index and forces a scan of
+      // every 400K tsvector, which times out. Fall back to the small jsonb
+      // signal, which is 8x faster and errs toward excluding more.
+      if (s === 1) add('site_tsv', 'fts.' + f.fts);
+      else add(f.fallbackCol, 'not.cs.' + JSON.stringify({[f.fallbackKey]: true}));
       continue;
     }
     if (f.any) {
