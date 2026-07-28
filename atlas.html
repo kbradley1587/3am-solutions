@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>M37 Atlas Terminal</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<style>
+  :root { --navy:#0b1a2b; --panel:#0f2236; --steel:#4a6fa5; --glow:#7faeff; --amber:#ffb454; --text:#dce8f7; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--navy); color:var(--text); font-family:"Segoe UI",system-ui,sans-serif; min-height:100vh; }
+  header { padding:14px 22px 10px; border-bottom:1px solid #1c3752; display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  header h1 { font-size:18px; letter-spacing:3px; color:#fff; }
+  header .sub { color:var(--steel); font-size:11px; letter-spacing:1px; }
+  #who { margin-left:auto; font-size:11.5px; color:var(--steel); }
+  input, select { background:var(--panel); border:1px solid #1c3752; color:var(--text); border-radius:6px; padding:6px 10px; font-size:12.5px; }
+  input:focus, select:focus { outline:none; border-color:var(--steel); }
+  button { background:none; border:1px solid var(--steel); color:var(--glow); padding:6px 14px; border-radius:6px; cursor:pointer; font-size:12.5px; letter-spacing:.4px; }
+  button:hover { background:var(--panel); }
+  button.primary { background:var(--glow); color:#06121f; border-color:var(--glow); font-weight:700; }
+  button.mini { padding:3px 9px; font-size:10.5px; letter-spacing:.3px; }
+  #login { max-width:380px; margin:80px auto; background:var(--panel); border:1px solid #1c3752; border-radius:12px; padding:28px; }
+  #login h2 { font-size:15px; letter-spacing:2px; color:#fff; margin-bottom:6px; }
+  #login p { font-size:11.5px; color:var(--steel); margin-bottom:18px; line-height:1.5; }
+  #login input { width:100%; margin-bottom:10px; }
+  #login button { width:100%; }
+  #loginMsg { font-size:11.5px; color:var(--amber); margin-top:10px; min-height:16px; }
+  #app { display:none; }
+  #controls { padding:10px 22px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; border-bottom:1px solid #122940; }
+
+  /* ---- market tree ---- */
+  #mktPanel { display:none; padding:12px 22px 14px; border-bottom:1px solid #122940; background:#0a1826; }
+  .panelbar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
+  .panelbar .spacer { margin-left:auto; }
+  #mktFind { width:210px; }
+  #stateTree { max-height:340px; overflow-y:auto; border:1px solid #14293f; border-radius:8px; }
+  .st { border-bottom:1px solid #122940; }
+  .st:last-child { border-bottom:none; }
+  .st-head { display:flex; align-items:center; gap:9px; padding:7px 12px; cursor:pointer; user-select:none; }
+  .st-head:hover { background:#0e2033; }
+  .st-head input { width:auto; margin:0; accent-color:var(--glow); }
+  .st-name { font-size:12.5px; letter-spacing:.6px; color:#fff; }
+  .st-meta { color:#5b7a9f; font-size:10.5px; }
+  .st-doors { margin-left:auto; color:var(--steel); font-size:11px; font-variant-numeric:tabular-nums; }
+  .caret { color:var(--steel); font-size:10px; width:10px; transition:transform .12s ease; }
+  .st.open .caret { transform:rotate(90deg); }
+  .st-body { display:none; padding:2px 12px 9px 40px; }
+  .st.open .st-body { display:block; }
+  .mkt { display:flex; align-items:center; gap:8px; padding:3px 0; font-size:11.5px; cursor:pointer; }
+  .mkt:hover { color:#fff; }
+  .mkt input { width:auto; margin:0; accent-color:var(--glow); }
+  .mkt .d { margin-left:auto; color:#5b7a9f; font-size:10.5px; font-variant-numeric:tabular-nums; }
+  .mkt .e { color:#3f6b52; font-size:10.5px; font-variant-numeric:tabular-nums; width:52px; text-align:right; }
+  .hidden { display:none !important; }
+
+  /* ---- org filter ---- */
+  #orgPanel { display:none; padding:12px 22px 14px; border-bottom:1px solid #122940; background:#0a1826; }
+  #orgGrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:5px 16px; margin-top:9px; }
+  #orgGrid label { font-size:11.5px; display:flex; align-items:center; gap:7px; cursor:pointer; padding:3px 0; }
+  #orgGrid input { width:auto; accent-color:var(--glow); }
+  #orgGrid .ct { margin-left:auto; color:#5b7a9f; font-size:10.5px; font-variant-numeric:tabular-nums; }
+  #orgGrid .tag { color:#5b7a9f; font-size:10px; }
+
+  #chips { padding:8px 22px; display:flex; gap:6px; flex-wrap:wrap; }
+  .chip { background:var(--panel); border:1px solid #1c3752; color:var(--text); padding:5px 12px; border-radius:999px; font-size:11.5px; cursor:pointer; user-select:none; }
+  .chip.req { background:var(--glow); color:#06121f; border-color:var(--glow); font-weight:700; }
+  .chip.exc { background:transparent; color:var(--amber); border-color:var(--amber); font-weight:700; text-decoration:line-through; }
+  .hint { color:#5b7a9f; font-size:10.5px; padding:0 22px 6px; }
+  #status { padding:8px 22px; font-size:13px; color:var(--amber); min-height:20px; }
+  #status b { color:var(--glow); font-size:16px; }
+  #results { padding:0 22px 30px; overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; font-size:12px; }
+  th { text-align:left; color:var(--steel); font-weight:600; letter-spacing:.5px; padding:8px 10px; border-bottom:1px solid #1c3752; position:sticky; top:0; background:var(--navy); }
+  td { padding:7px 10px; border-bottom:1px solid #122940; vertical-align:top; }
+  tr:hover td { background:#0e2033; }
+  td a { color:var(--glow); text-decoration:none; }
+  .num { text-align:right; font-variant-numeric:tabular-nums; }
+  .muted { color:#5b7a9f; }
+  .badge { font-size:9.5px; letter-spacing:.4px; padding:2px 6px; border-radius:4px; border:1px solid #24435f; color:#7f9dbd; white-space:nowrap; }
+  .badge.ind { border-color:#2d5a3d; color:#63b07f; }
+  .badge.grp { border-color:#2a4d6b; color:#6fa3cf; }
+  .badge.dso { border-color:#6b4a2a; color:#d79a5a; }
+  .badge.inst { border-color:#4a3a6b; color:#9a86c4; }
+  .badge.junk { border-color:#6b2a2a; color:#c96a6a; }
+</style>
+</head>
+<body>
+
+<div id="login">
+  <h2>M37 ATLAS</h2>
+  <p>Staff access only. Sign in to search the dental intelligence database.</p>
+  <input type="email" id="email" placeholder="Email" autocomplete="username">
+  <input type="password" id="pw" placeholder="Password" autocomplete="current-password">
+  <button class="primary" id="signin">SIGN IN</button>
+  <div id="loginMsg"></div>
+</div>
+
+<div id="app">
+<header>
+  <h1>M37 ATLAS</h1>
+  <div class="sub" id="hdrsub">LOADING COVERAGE...</div>
+  <div id="who"></div>
+  <a href="dental.html" style="margin-left:14px;color:var(--steel);font-size:11px;text-decoration:none;letter-spacing:.5px;">&larr; 3AM SOLUTIONS</a>
+</header>
+
+<div id="controls">
+  <button id="mktBtn">MARKETS: ALL</button>
+  <button id="orgBtn">OWNERSHIP: ALL</button>
+  <input id="zip" placeholder="ZIP (21204 or 212 or list)" style="width:200px">
+  <input id="kw" placeholder="Keyword in site text" style="width:230px">
+  <input id="minrev" type="number" placeholder="Min reviews" style="width:110px">
+  <label style="font-size:12px"><input type="checkbox" id="enrichedOnly" checked style="width:auto"> Enriched only</label>
+  <select id="limit">
+    <option value="200">200 rows</option>
+    <option value="500" selected>500 rows</option>
+    <option value="1000">1000 rows</option>
+    <option value="5000">5000 rows</option>
+  </select>
+  <button class="primary" id="run">SEARCH</button>
+  <button id="csv">&#8595; CSV</button>
+  <button id="reset">RESET</button>
+</div>
+
+<div id="mktPanel">
+  <div class="panelbar">
+    <input id="mktFind" placeholder="Find a market or state">
+    <button class="mini" id="mktAll">SELECT ALL</button>
+    <button class="mini" id="mktNone">CLEAR</button>
+    <button class="mini" id="mktExpand">EXPAND ALL</button>
+    <button class="mini" id="mktCollapse">COLLAPSE ALL</button>
+    <span class="spacer"></span>
+    <span class="st-meta" id="mktSummary"></span>
+  </div>
+  <div id="stateTree"></div>
+  <div class="hint" style="padding:8px 0 0">Click a state name to expand it. The state checkbox selects every market in that state.</div>
+</div>
+
+<div id="orgPanel">
+  <div class="panelbar">
+    <button class="mini primary" id="orgBuyers">BUYERS ONLY</button>
+    <button class="mini" id="orgAll">SELECT ALL</button>
+    <button class="mini" id="orgNone">CLEAR</button>
+    <span class="spacer"></span>
+    <span class="st-meta" id="orgSummary"></span>
+  </div>
+  <div id="orgGrid"></div>
+  <div class="hint" style="padding:8px 0 0">BUYERS ONLY keeps independents and small groups. It drops corporate DSOs, PDS-affiliated offices, dental schools, hospitals, lead-gen aggregators, and website-vendor artifacts.</div>
+</div>
+
+<div id="chips"></div>
+<div class="hint">Click a signal once to require it, twice to exclude it, three times to clear.</div>
+
+<div id="status">Choose filters and hit SEARCH.</div>
+<div class="hint" id="gen"></div>
+<div id="results"></div>
+</div>
+
+<script>
+const SUPABASE_URL = "https://yytjqpgvqshidjpjrebm.supabase.co";
+const PUBLISHABLE = "sb_publishable_Zgt30iZPieAUa9Djg1DwVg_aImagg8I";
+let TOKEN = null;
+
+async function signIn() {
+  const email = document.getElementById('email').value.trim();
+  const pw = document.getElementById('pw').value;
+  const msg = document.getElementById('loginMsg');
+  msg.textContent = 'Signing in...';
+  try {
+    const r = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
+      method: 'POST',
+      headers: { apikey: PUBLISHABLE, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pw })
+    });
+    const data = await r.json();
+    if (!r.ok || !data.access_token) { msg.textContent = data.error_description || data.msg || 'Sign in failed.'; return; }
+    TOKEN = data.access_token;
+    msg.textContent = 'Loading coverage...';
+    const ok = await loadCoverage();
+    if (!ok) { msg.textContent = 'Signed in, but could not load market list. Check connection.'; return; }
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('who').textContent = email;
+  } catch (e) { msg.textContent = 'Network error: ' + e.message; }
+}
+document.getElementById('signin').onclick = signIn;
+document.getElementById('pw').addEventListener('keydown', e => { if (e.key === 'Enter') signIn(); });
+
+/* ---------------- live coverage load ---------------- */
+// Markets and ownership counts come straight from the database on every sign-in,
+// so adding a market never requires touching this file.
+async function loadCoverage() {
+  try {
+    const r = await fetch(SUPABASE_URL + '/rest/v1/rpc/atlas_markets', {
+      method: 'POST',
+      headers: { apikey: PUBLISHABLE, Authorization: 'Bearer ' + TOKEN,
+                 'Content-Type': 'application/json' },
+      body: '{}'
+    });
+    if (!r.ok) return false;
+    const d = await r.json();
+
+    const byState = new Map();
+    (d.markets || []).forEach(([state, metro, doors, enriched]) => {
+      if (!byState.has(state)) byState.set(state, []);
+      byState.get(state).push([metro, doors, enriched]);
+    });
+    STATES = [...byState.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+
+    const counts = d.orgs || {};
+    ORGS = ORG_META.map(o => ({...o, n: counts[o.id] || 0}));
+
+    const t = d.totals || {};
+    document.getElementById('hdrsub').textContent =
+      (t.markets || 0) + ' MARKETS \u00b7 ' + (t.states || 0) + ' STATES \u00b7 ' +
+      fmt(t.doors || 0) + ' DOORS \u00b7 ' + fmt(t.enriched || 0) + ' PROFILED';
+    document.getElementById('gen').textContent = 'data as of ' + (d.generated || '');
+
+    buildTree(); buildOrgs();
+    updateMktBtn(); updateOrgBtn();
+    return true;
+  } catch (e) { return false; }
+}
+
+/* ---------------- market tree data: [state, [[metro, doors, enriched], ...]] --------------- */
+let STATES = [];
+const tree = document.getElementById('stateTree');
+const fmt = n => Number(n).toLocaleString();
+
+function buildTree() {
+  tree.innerHTML = '';
+  STATES.forEach(([stName, metros]) => {
+    const doors = metros.reduce((a, m) => a + m[1], 0);
+    const enr = metros.reduce((a, m) => a + m[2], 0);
+    const wrap = document.createElement('div');
+    wrap.className = 'st';
+    wrap.dataset.state = stName.toLowerCase();
+
+    const head = document.createElement('div');
+    head.className = 'st-head';
+    head.innerHTML =
+      '<input type="checkbox" class="st-box">' +
+      '<span class="caret">&#9654;</span>' +
+      '<span class="st-name">' + stName + '</span>' +
+      '<span class="st-meta">' + metros.length + (metros.length === 1 ? ' market' : ' markets') + '</span>' +
+      '<span class="st-doors">' + fmt(doors) + ' doors &middot; ' + fmt(enr) + ' enriched</span>';
+    wrap.appendChild(head);
+
+    const body = document.createElement('div');
+    body.className = 'st-body';
+    metros.forEach(([m, d, e]) => {
+      const pct = d ? Math.round(100 * e / d) : 0;
+      const lab = document.createElement('label');
+      lab.className = 'mkt';
+      lab.dataset.metro = m.toLowerCase();
+      lab.title = pct + '% of practices profiled';
+      lab.innerHTML =
+        '<input type="checkbox" class="mkt-box" value="' + m.replace(/"/g, '&quot;') + '">' +
+        '<span>' + m + '</span>' +
+        '<span class="d">' + fmt(d) + '</span>' +
+        '<span class="e">' + fmt(e) + ' &middot; ' + pct + '%</span>';
+      body.appendChild(lab);
+    });
+    wrap.appendChild(body);
+    tree.appendChild(wrap);
+
+    head.addEventListener('click', ev => {
+      if (ev.target.classList.contains('st-box')) return;
+      wrap.classList.toggle('open');
+    });
+    head.querySelector('.st-box').addEventListener('change', ev => {
+      body.querySelectorAll('.mkt-box').forEach(b => b.checked = ev.target.checked);
+      syncStates(); updateMktBtn();
+    });
+  });
+}
+
+tree.addEventListener('change', ev => {
+  if (ev.target.classList.contains('mkt-box')) { syncStates(); updateMktBtn(); }
+});
+
+function syncStates() {
+  tree.querySelectorAll('.st').forEach(st => {
+    const boxes = [...st.querySelectorAll('.mkt-box')];
+    const on = boxes.filter(b => b.checked).length;
+    const sb = st.querySelector('.st-box');
+    sb.checked = on === boxes.length && on > 0;
+    sb.indeterminate = on > 0 && on < boxes.length;
+  });
+}
+
+function selectedMarkets() {
+  return [...tree.querySelectorAll('.mkt-box:checked')].map(i => i.value);
+}
+
+function updateMktBtn() {
+  const s = selectedMarkets();
+  document.getElementById('mktBtn').textContent = s.length ? 'MARKETS: ' + s.length + ' SELECTED' : 'MARKETS: ALL';
+  const states = new Set();
+  tree.querySelectorAll('.st').forEach(st => {
+    if (st.querySelector('.mkt-box:checked')) states.add(st.dataset.state);
+  });
+  document.getElementById('mktSummary').textContent =
+    s.length ? s.length + ' markets across ' + states.size + (states.size === 1 ? ' state' : ' states') : 'Nothing selected means every market.';
+}
+
+document.getElementById('mktBtn').onclick = () => {
+  const p = document.getElementById('mktPanel');
+  p.style.display = p.style.display === 'block' ? 'none' : 'block';
+  document.getElementById('orgPanel').style.display = 'none';
+};
+document.getElementById('mktAll').onclick = () => {
+  tree.querySelectorAll('.mkt-box').forEach(i => i.checked = true); syncStates(); updateMktBtn();
+};
+document.getElementById('mktNone').onclick = () => {
+  tree.querySelectorAll('.mkt-box').forEach(i => i.checked = false); syncStates(); updateMktBtn();
+};
+document.getElementById('mktExpand').onclick = () => tree.querySelectorAll('.st').forEach(s => s.classList.add('open'));
+document.getElementById('mktCollapse').onclick = () => tree.querySelectorAll('.st').forEach(s => s.classList.remove('open'));
+
+document.getElementById('mktFind').addEventListener('input', ev => {
+  const q = ev.target.value.trim().toLowerCase();
+  tree.querySelectorAll('.st').forEach(st => {
+    if (!q) { st.classList.remove('hidden', 'open'); st.querySelectorAll('.mkt').forEach(m => m.classList.remove('hidden')); return; }
+    const stHit = st.dataset.state.includes(q);
+    let any = stHit;
+    st.querySelectorAll('.mkt').forEach(m => {
+      const hit = stHit || m.dataset.metro.includes(q);
+      m.classList.toggle('hidden', !hit);
+      if (hit) any = true;
+    });
+    st.classList.toggle('hidden', !any);
+    st.classList.toggle('open', any);
+  });
+});
+
+/* ---------------- ownership / DSO filter --------------- */
+const ORG_META = [
+  {id:"independent",    label:"Independent",        note:"single location",              cls:"ind"},
+  {id:"group",          label:"Group (2-4)",        note:"small multi-site",             cls:"grp"},
+  {id:"group_large",    label:"Group (5+)",         note:"unnamed network",              cls:"grp"},
+  {id:"dso_corporate",  label:"DSO corporate",      note:"Aspen, Western, Gentle...",    cls:"dso"},
+  {id:"dso_affiliated", label:"DSO affiliated",     note:"PDS / Smile Generation",       cls:"dso"},
+  {id:"institutional",  label:"Institutional",      note:"schools, hospitals, FQHC",     cls:"inst"},
+  {id:"aggregator",     label:"Lead-gen aggregator",note:"1800dentist and similar",      cls:"junk"},
+  {id:"vendor_artifact",label:"Vendor artifact",    note:"agency domain, not a practice",cls:"junk"},
+  {id:"unclassified",   label:"Unclassified",       note:"no website on file",           cls:""}
+];
+let ORGS = ORG_META.map(o => ({...o, n: 0}));
+const orgGrid = document.getElementById('orgGrid');
+
+function buildOrgs() {
+  orgGrid.innerHTML = '';
+  ORGS.forEach(o => {
+    const l = document.createElement('label');
+    l.innerHTML = '<input type="checkbox" class="org-box" value="' + o.id + '" checked>' +
+                  '<span>' + o.label + '</span> <span class="tag">' + o.note + '</span>' +
+                  '<span class="ct">' + fmt(o.n) + '</span>';
+    orgGrid.appendChild(l);
+  });
+}
+
+function selectedOrgs() { return [...orgGrid.querySelectorAll('.org-box:checked')].map(i => i.value); }
+function updateOrgBtn() {
+  const s = selectedOrgs();
+  const btn = document.getElementById('orgBtn');
+  btn.textContent = (s.length === ORGS.length || s.length === 0) ? 'OWNERSHIP: ALL' : 'OWNERSHIP: ' + s.length + ' TYPES';
+  const reach = ORGS.filter(o => s.includes(o.id)).reduce((a, o) => a + o.n, 0);
+  document.getElementById('orgSummary').textContent =
+    (s.length === ORGS.length || s.length === 0) ? 'No ownership filter applied.' : fmt(reach) + ' practices in scope';
+}
+orgGrid.addEventListener('change', updateOrgBtn);
+document.getElementById('orgBtn').onclick = () => {
+  const p = document.getElementById('orgPanel');
+  p.style.display = p.style.display === 'block' ? 'none' : 'block';
+  document.getElementById('mktPanel').style.display = 'none';
+};
+document.getElementById('orgAll').onclick = () => {
+  orgGrid.querySelectorAll('.org-box').forEach(i => i.checked = true); updateOrgBtn();
+};
+document.getElementById('orgNone').onclick = () => {
+  orgGrid.querySelectorAll('.org-box').forEach(i => i.checked = false); updateOrgBtn();
+};
+document.getElementById('orgBuyers').onclick = () => {
+  orgGrid.querySelectorAll('.org-box').forEach(i => i.checked = (i.value === 'independent' || i.value === 'group'));
+  updateOrgBtn();
+};
+
+/* ---------------- signal chips --------------- */
+const FILTERS = [
+  {id:"cbct",  label:"CBCT",              col:"technology", key:"cbct"},
+  {id:"scan",  label:"I/O SCANNER",       col:"technology", key:"intraoral_scanner"},
+  {id:"cerec", label:"CEREC / SAME-DAY",  col:"technology", key:"cerec_same_day"},
+  {id:"laser", label:"ANY LASER",         bool:"has_laser"},
+  {id:"print", label:"3D PRINTING",       col:"technology", key:"three_d_printing"},
+  {id:"prf",   label:"PRF / PRP",         col:"technology", key:"prf_prp"},
+  {id:"impl",  label:"IMPLANTS",          col:"procedures", key:"implants"},
+  {id:"ao4",   label:"ALL-ON-4 / ARCH",   col:"procedures", key:"all_on_4"},
+  {id:"sinus", label:"SINUS LIFTS",       col:"procedures", key:"sinus_lift"},
+  {id:"graft", label:"BONE GRAFTING",     col:"procedures", key:"bone_grafting"},
+  {id:"osurg", label:"ORAL SURGERY",      bool:"has_oral_surgery"},
+  {id:"sleep", label:"SLEEP APNEA",       col:"procedures", key:"sleep_apnea"},
+  {id:"sed",   label:"SEDATION",          bool:"has_sedation"},
+  {id:"tmj",   label:"TMJ",               col:"procedures", key:"tmj_treatment"},
+  {id:"inv",   label:"ALIGNERS",          col:"procedures", key:"invisalign_aligners"},
+  {id:"botox", label:"BOTOX / FILLERS",   col:"procedures", key:"botox_fillers"},
+  {id:"email", label:"HAS EMAIL",         special:"email"}
+];
+const state = {}; FILTERS.forEach(f => state[f.id] = 0);
+const chipsEl = document.getElementById('chips');
+FILTERS.forEach(f => {
+  const b = document.createElement('button');
+  b.className = 'chip'; b.textContent = f.label;
+  b.onclick = () => {
+    state[f.id] = (state[f.id] + 1) % 3;
+    b.className = 'chip' + (state[f.id] === 1 ? ' req' : state[f.id] === 2 ? ' exc' : '');
+  };
+  chipsEl.appendChild(b);
+});
+
+let lastRows = [];
+
+function buildQuery() {
+  const parts = [];
+  const add = (k, v) => parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
+
+  const orgs = selectedOrgs();
+  const orgFiltering = orgs.length > 0 && orgs.length < ORGS.length;
+  // !inner only when actually filtering, so a market loaded before the next
+  // refresh_practice_org() run is never silently dropped from an unfiltered search
+  const embed = orgFiltering ? 'practice_org!inner(org_type,org_brand)' : 'practice_org(org_type,org_brand)';
+
+  add('select', 'name,metro,city,address,postal_code,phone,website,google_rating,review_count,doctor_names,emails,' + embed);
+  add('permanently_closed', 'eq.false');
+  add('temporarily_closed', 'eq.false');
+  if (document.getElementById('enrichedOnly').checked) add('site_text', 'not.is.null');
+  if (orgFiltering) add('practice_org.org_type', 'in.(' + orgs.join(',') + ')');
+
+  const mk = selectedMarkets();
+  if (mk.length === 1) add('metro', 'eq.' + mk[0]);
+  else if (mk.length > 1) add('metro', 'in.(' + mk.map(m => '"' + m + '"').join(',') + ')');
+
+  const zipRaw = document.getElementById('zip').value.trim();
+  if (zipRaw) {
+    const zips = zipRaw.split(/[,\s]+/).filter(Boolean);
+    if (zips.length === 1 && zips[0].length < 5) add('postal_code', 'like.' + zips[0] + '*');
+    else if (zips.length === 1) add('postal_code', 'eq.' + zips[0]);
+    else add('postal_code', 'in.(' + zips.join(',') + ')');
+  }
+
+  const minrev = document.getElementById('minrev').value;
+  if (minrev) add('review_count', 'gte.' + minrev);
+
+  const kw = document.getElementById('kw').value.trim();
+  if (kw) add('site_text', 'ilike.*' + kw.replaceAll('*','') + '*');
+
+  for (const f of FILTERS) {
+    const s = state[f.id];
+    if (!s) continue;
+    if (f.special === 'email') { add('emails', s === 1 ? 'neq.{}' : 'eq.{}'); continue; }
+    if (f.bool) { add(f.bool, s === 1 ? 'is.true' : 'not.is.true'); continue; }
+    add(f.col, (s === 1 ? 'cs.' : 'not.cs.') + JSON.stringify({[f.key]: true}));
+  }
+  add('order', 'review_count.desc.nullslast');
+  add('limit', document.getElementById('limit').value);
+  return parts.join('&');
+}
+
+function orgOf(r) {
+  const o = Array.isArray(r.practice_org) ? r.practice_org[0] : r.practice_org;
+  return o || null;
+}
+
+async function run() {
+  const status = document.getElementById('status');
+  if (!TOKEN) { status.textContent = 'Session expired. Reload and sign in again.'; return; }
+  status.textContent = 'Searching...';
+  try {
+    const resp = await fetch(SUPABASE_URL + '/rest/v1/practices?' + buildQuery(), {
+      headers: { apikey: PUBLISHABLE, Authorization: 'Bearer ' + TOKEN, Prefer: 'count=exact' }
+    });
+    if (!resp.ok) { status.textContent = 'Error ' + resp.status + ': ' + (await resp.text()).slice(0, 240); return; }
+    const total = (resp.headers.get('content-range') || '').split('/')[1] || '?';
+    const rows = await resp.json();
+    lastRows = rows;
+    status.innerHTML = '<b>' + total + '</b> matching offices' +
+      (rows.length < Number(total) ? ' &nbsp;<span class="muted">(showing top ' + rows.length + ')</span>' : '');
+    render(rows);
+  } catch (err) { status.textContent = 'Network error: ' + err.message; }
+}
+
+function esc(s) { return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+function render(rows) {
+  const el = document.getElementById('results');
+  if (!rows.length) { el.innerHTML = '<p class="muted" style="padding:20px 0">No matches. Loosen a filter.</p>'; return; }
+  const cls = {independent:'ind', group:'grp', group_large:'grp', dso_corporate:'dso',
+               dso_affiliated:'dso', institutional:'inst', aggregator:'junk', vendor_artifact:'junk'};
+  let h = '<table><tr><th>PRACTICE</th><th>OWNERSHIP</th><th>MARKET</th><th>ADDRESS</th><th>ZIP</th><th>PHONE</th><th>WEBSITE</th>' +
+          '<th class="num">RATING</th><th class="num">REVIEWS</th><th>DOCTORS</th><th>EMAILS</th></tr>';
+  for (const r of rows) {
+    const o = orgOf(r);
+    const t = o ? o.org_type : '';
+    const badge = t ? '<span class="badge ' + (cls[t] || '') + '">' + esc(o.org_brand || t.replace(/_/g, ' ')) + '</span>' : '';
+    h += '<tr><td><b>' + esc(r.name) + '</b></td><td>' + badge + '</td><td>' + esc(r.metro) + '</td><td>' + esc(r.address) +
+      '</td><td>' + esc(r.postal_code) + '</td><td>' + esc(r.phone) + '</td><td>' +
+      (r.website ? '<a href="' + esc(r.website) + '" target="_blank">' +
+      esc((r.website || '').replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')) + '</a>' : '') +
+      '</td><td class="num">' + (r.google_rating ?? '') + '</td><td class="num">' + (r.review_count ?? '') +
+      '</td><td class="muted">' + esc((r.doctor_names || []).slice(0, 3).join(', ')) +
+      '</td><td class="muted">' + esc((r.emails || []).join(', ')) + '</td></tr>';
+  }
+  el.innerHTML = h + '</table>';
+}
+
+document.getElementById('run').onclick = run;
+['kw','zip','minrev'].forEach(id =>
+  document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') run(); }));
+
+document.getElementById('reset').onclick = () => {
+  FILTERS.forEach(f => state[f.id] = 0);
+  document.querySelectorAll('.chip').forEach(b => b.className = 'chip');
+  tree.querySelectorAll('.mkt-box').forEach(i => i.checked = false);
+  syncStates(); updateMktBtn();
+  orgGrid.querySelectorAll('.org-box').forEach(i => i.checked = true); updateOrgBtn();
+  document.getElementById('mktFind').value = '';
+  document.getElementById('mktFind').dispatchEvent(new Event('input'));
+  document.getElementById('kw').value = ''; document.getElementById('zip').value = '';
+  document.getElementById('minrev').value = '';
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('status').textContent = 'Filters reset.';
+};
+
+document.getElementById('csv').onclick = () => {
+  if (!lastRows.length) { document.getElementById('status').textContent = 'Run a search first.'; return; }
+  const cols = ['name','ownership','org_brand','metro','city','address','postal_code','phone','website','google_rating','review_count','doctors','emails'];
+  const lines = [cols.join(',')];
+  for (const r of lastRows) {
+    const o = orgOf(r);
+    lines.push([r.name, o ? o.org_type : '', o ? (o.org_brand || '') : '', r.metro, r.city, r.address, r.postal_code,
+      r.phone, r.website, r.google_rating, r.review_count,
+      (r.doctor_names || []).join('; '), (r.emails || []).join('; ')]
+      .map(v => '"' + String(v ?? '').replaceAll('"', '""') + '"').join(','));
+  }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([lines.join('\n')], { type: 'text/csv' }));
+  a.download = 'm37_atlas_search.csv';
+  a.click();
+};
+
+</script>
+</body>
+</html>
