@@ -148,7 +148,7 @@
 </div>
 
 <div id="chips"></div>
-<div class="hint">Click a signal once to require it, twice to exclude it, three times to clear.</div>
+<div class="hint">Click a signal once to require it, twice to exclude it, three times to clear. I/O SCANNER includes aligner and CEREC practices; SCANNER (STATED) is only where the site names one.</div>
 
 <div id="status">Choose filters and hit SEARCH.</div>
 <div class="hint" id="gen"></div>
@@ -388,7 +388,11 @@ document.getElementById('orgBuyers').onclick = () => {
 /* ---------------- signal chips --------------- */
 const FILTERS = [
   {id:"cbct",  label:"CBCT",              col:"technology", key:"cbct"},
-  {id:"scan",  label:"I/O SCANNER",       col:"technology", key:"intraoral_scanner"},
+  {id:"scan",  label:"I/O SCANNER",       any:[["technology","intraoral_scanner"],
+                                                  ["technology","cerec_same_day"],
+                                                  ["technology","cad_cam"],
+                                                  ["procedures","invisalign_aligners"]]},
+  {id:"scanx", label:"SCANNER (STATED)",   col:"technology", key:"intraoral_scanner"},
   {id:"cerec", label:"CEREC / SAME-DAY",  col:"technology", key:"cerec_same_day"},
   {id:"laser", label:"ANY LASER",         bool:"has_laser"},
   {id:"print", label:"3D PRINTING",       col:"technology", key:"three_d_printing"},
@@ -421,6 +425,7 @@ let lastRows = [];
 
 function buildQuery() {
   const parts = [];
+  const parts_or = [];
   const add = (k, v) => parts.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
 
   const orgs = selectedOrgs();
@@ -458,11 +463,20 @@ function buildQuery() {
     if (!s) continue;
     if (f.special === 'email') { add('emails', s === 1 ? 'neq.{}' : 'eq.{}'); continue; }
     if (f.bool) { add(f.bool, s === 1 ? 'is.true' : 'not.is.true'); continue; }
+    if (f.any) {
+      // Invisalign cannot be delivered without a digital scan, so an aligner
+      // practice is a scanner practice even when the site never says "scanner".
+      const parts = f.any.map(([c, k]) => c + '.cs.' + JSON.stringify({[k]: true}));
+      parts.forEach(p => { if (/[(),]/.test(p)) {} });
+      if (s === 1) parts_or.push('or=(' + parts.join(',') + ')');
+      else parts_or.push('not.or=(' + parts.join(',') + ')');
+      continue;
+    }
     add(f.col, (s === 1 ? 'cs.' : 'not.cs.') + JSON.stringify({[f.key]: true}));
   }
   add('order', 'review_count.desc.nullslast');
   add('limit', document.getElementById('limit').value);
-  return parts.join('&');
+  return parts.concat(parts_or).join('&');
 }
 
 function orgOf(r) {
