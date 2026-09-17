@@ -399,9 +399,10 @@ const FILTERS = [
   {id:"sinus", label:"SINUS LIFTS",       col:"procedures", key:"sinus_lift"},
   {id:"graft", label:"BONE GRAFTING",     col:"procedures", key:"bone_grafting"},
   {id:"osurg", label:"ORAL SURGERY",      bool:"has_oral_surgery"},
-  {id:"sleep", label:"SLEEP APNEA",       col:"procedures", key:"sleep_apnea"},
+  {id:"sleep", label:"SLEEP APNEA",       embedBool:"treats_sleep"},
+  {id:"appl",  label:"ORAL APPLIANCE",    embedBool:"has_oral_appliance"},
   {id:"sed",   label:"SEDATION",          bool:"has_sedation"},
-  {id:"tmj",   label:"TMJ",               col:"procedures", key:"tmj_treatment"},
+  {id:"tmj",   label:"TMJ",               embedBool:"treats_tmj"},
   {id:"inv",   label:"ALL ALIGNERS",      col:"procedures", key:"invisalign_aligners"},
   {id:"botox", label:"BOTOX / FILLERS",   col:"procedures", key:"botox_fillers"},
   {id:"email", label:"HAS EMAIL",         special:"email"}
@@ -430,7 +431,7 @@ function buildQuery() {
   const orgFiltering = (orgs.length > 0 && orgs.length < ORGS.length) || orgNeeded;
   // !inner only when actually filtering, so a market loaded before the next
   // refresh_practice_org() run is never silently dropped from an unfiltered search
-  const embed = orgFiltering ? 'practice_org!inner(org_type,org_brand,has_invisalign,has_scanner)' : 'practice_org(org_type,org_brand,has_invisalign,has_scanner)';
+  const embed = orgFiltering ? 'practice_org!inner(org_type,org_brand,has_invisalign,has_scanner,treats_sleep,has_oral_appliance,treats_tmj)' : 'practice_org(org_type,org_brand,has_invisalign,has_scanner,treats_sleep,has_oral_appliance,treats_tmj)';
 
   add('select', 'name,metro,city,address,postal_code,phone,website,google_rating,review_count,doctor_names,emails,' + embed);
   add('permanently_closed', 'eq.false');
